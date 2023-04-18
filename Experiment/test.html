@@ -2,6 +2,8 @@
 <html>
 <head>
   <script src="jspsych/dist/jspsych.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
   <script src="jspsych/dist/plugin-fullscreen.js"></script>
   <script src="jspsych/dist/plugin-instructions.js"></script>
   <script src="jspsych/dist/plugin-image-keyboard-response.js"></script>
@@ -12,106 +14,5 @@
   <link rel="stylesheet" href="jspsych/dist/jspsych.css">
 </head>
 <body></body>
-<script>
-
-  var jsPsych = initJsPsych({
-    on_finish: function() {
-        jsPsych.data.displayData();
-        jsPsych.data.get().localSave('csv', 'test.csv');
-        document.exitFullscreen();
-      }
-    }
-  );
-
-
-  var fullscreen_trial = {
-    type: jsPsychFullscreen,
-    fullscreen_mode: true
-  };
-
-
-
-  // all images are used in standard trials that can be automatically preloaded (as well as being used in trials 
-  // that use timeline variables), so we can preload all image files with the auto_preload option
- 
-  var stim_images = ['img/materials/stim1.jpg','img/materials/stim2.jpg'];
-  var recon_images = [];
-  for (i = 0; i <360; i++){
-    recon_images.push('img/sceneWheel_images_webp/Wheel01/wheel01_r02/'+('00000'+i).slice(-6).toString()+'.webp')
-  }
-
-  var preload_images = [stim_images];
-  preload_images.push([recon_images]);
-
-  var preload = {
-    type: jsPsychPreload,
-    images: preload_images,
-    auto_preload: true
-  };
-
-  var instructions = {
-    type: jsPsychInstructions,
-    pages: ['<p><b>Welcome to the experiment</b></p><br><p>In this experiment, you will be asked to see and remember various indoor scenes.</p><p>The detailed procedure of the task would be followed on the next page.</p></br><p>Please click the NEXT button below to see the procedure</p>',
-      '<p>This is the second page of instructions.</p>',
-      '<p>This is the final page.</p>'],
-    show_clickable_nav: true,
-    show_page_number: true,
-    button_label_previous: 'Previous',
-    button_label_next: 'Next',
-    page_label: 'Page',
-  };
-
-  var cue = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p  font-size: 48px; font-weight: bold;">Bedroom</p>',
-    choices: "NO_KEYS",
-    trial_duration: 1000,
-  }
-  
-  
-  var target = {
-    type: jsPsychImageKeyboardResponse,
-    stimulus: jsPsych.timelineVariable('target'),
-    trial_duration: 1000,
-    stimulus_width: 400, 
-    maintain_aspect_ratio: true,
-    post_trial_gap: 0,
-  };
-
-
-  var judgement = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">congruent</p>'+
-      '<p style="color: black; font-size: 30px; font-weight: bold;">vs</p>'+
-      '<p style="color: black; font-size: 48px; font-weight: bold;">incongruent</p>',
-    choices: ['f','j'],
-    //trial_duration: 5000,
-  };
-
-  var recon = {
-    type: jsPsychReconstruct_wheel,
-    image_path: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02',
-    image_format: 'webp',
-    uncertainty_range: false
-  }
-
-  
-  var trial_proc = {
-    timeline: [cue, target, judgement, recon],
-    timeline_variables: [
-      {target: 'img/materials/stim1.jpg'},
-      {target: 'img/materials/stim2.jpg'},
-    ],
-    repetitions: 1,
-//    loop_function: function() {
-//      return true;
-//    }
-  };
-  
- 
-  jsPsych.run([fullscreen_trial, preload, instructions, trial_proc]);
-  
-
-
-</script>
+<script src="./exp.js"></script>
 </html>
