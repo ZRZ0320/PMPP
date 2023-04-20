@@ -12,32 +12,48 @@ var jsPsych = initJsPsych({
   );
 
 
+var recon_images = [];
+  for (k=0;k<5;k++){
+    for (j=0;j<5;j++){
+      for (i = 0; i <360; i++){
+        recon_images.push('img/sceneWheel_images_webp/Wheel'+
+        ('00'+(k+1)).slice(-2).toString()+
+        '/wheel'+
+        ('00'+(k+1)).slice(-2).toString()+
+        '_r'+
+        ('00'+Math.pow(2,j+1)).slice(-2).toString()+
+        '/'+
+        ('00000'+i).slice(-6).toString()+
+        '.webp')
+        }
+      }
+    } 
+var cue_scene = ['Wheel01',
+  'Wheel02',
+  'Wheel03',
+  'Wheel04',
+  'Wheel05']
+
+var target_dir =['img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',
+'img/sceneWheel_images_webp/Wheel02/wheel02_r02/000001.webp',
+'img/sceneWheel_images_webp/Wheel03/wheel03_r02/000001.webp',
+'img/sceneWheel_images_webp/Wheel04/wheel04_r02/000001.webp',
+'img/sceneWheel_images_webp/Wheel05/wheel05_r02/000001.webp']
+
+var img_dir = ['img/sceneWheel_images_webp/Wheel01/wheel01_r02',
+'img/sceneWheel_images_webp/Wheel02/wheel02_r02',
+'img/sceneWheel_images_webp/Wheel03/wheel03_r02',
+'img/sceneWheel_images_webp/Wheel04/wheel04_r02',
+'img/sceneWheel_images_webp/Wheel05/wheel05_r02',]
+
 /*set up instruction block*/
 var fullscreen_trial = {
     type: jsPsychFullscreen,
-    fullscreen_mode: true
+    fullscreen_mode: true,
+    message: '<p>这个实验将会切换到全屏进行</p>',
+    button_label: '<p>全屏</p>'
   };
 
-
-
-
-
-var recon_images = [];
-for (k=0;k<5;k++){
-  for (j=0;j<5;j++){
-    for (i = 0; i <360; i++){
-      recon_images.push('img/sceneWheel_images_webp/Wheel'+
-      ('00'+(k+1)).slice(-2).toString()+
-      '/wheel'+
-      ('00'+(k+1)).slice(-2).toString()+
-      '_r'+
-      ('00'+Math.pow(2,j+1)).slice(-2).toString()+
-      '/'+
-      ('00000'+i).slice(-6).toString()+
-      '.webp')
-      }
-    }
-  } 
 
 var preload_images = [[recon_images]];
 
@@ -52,19 +68,17 @@ var preload = {
 
 var instructions = {
     type: jsPsychInstructions,
-    pages: ['<p><b>Welcome to the experiment</b></p>'+
+    pages: ['<p><b>欢迎参加本次实验</b></p>'+
       '<br>'+
-      '<p>In this experiment, you will be asked to see and remember various indoor scenes.</p>'+
-      '<p>The detailed procedure of the task would be followed on the next page.</p>'+
+      '<p>在本次实验中，你将会看到一系列场景，请尝试记住并回忆这些场景</p>'+
+      '<p>稍后你将进入一个示例环节，体验该实验的流程</p>'+
       '</br>'+
-      '<p>Please click the NEXT button below to see the procedure</p>',
-      '<p>This is the second page of instructions.</p>',
-      '<p>This is the final page.</p>'],
+      '<p>请点击"下一页"的按钮以进入下一个环节</p>'],
     show_clickable_nav: true,
     show_page_number: true,
-    button_label_previous: 'Previous',
-    button_label_next: 'Next',
-    page_label: 'Page',
+    button_label_previous: '上一页',
+    button_label_next: '下一页',
+    page_label: '页码',
     on_finish: function () {
       $("body").css("cursor", "none");
    }
@@ -76,12 +90,13 @@ var instructions = {
 /*set up example block*/
 var example_instruction = {
     type: jsPsychInstructions,
-    pages: ['<p><b>Welcome to the example procedure</b></p><br>',],
+    pages: ['<p><b>欢迎进入示例流程</b></p><br>'+
+    '<p>在本次实验中，你将会看到一个提示，随后将出现一幅图片，请判断图片与提示是否一致，并用鼠标选择你印象中最近接近该刺激的图片</p>'],
     show_clickable_nav: true,
     show_page_number: true,
-    button_label_previous: 'Previous',
-    button_label_next: 'Next',
-    page_label: 'Page',
+    button_label_previous: '上一页',
+    button_label_next: '下一页',
+    page_label: '页码',
   };
 
 
@@ -91,7 +106,7 @@ var example_cue = {
     stimulus: jsPsych.timelineVariable('cue'),
     choices: "ALL_KEYS",
     trial_duration: null,
-    prompt:'any'
+    prompt:'按任意键继续'
   }
   
   
@@ -103,19 +118,17 @@ var example_target = {
     stimulus_width: 400, 
     maintain_aspect_ratio: true,
     post_trial_gap: 0,
-    prompt:'</br>any',
+    prompt:'</br>按任意键继续',
   };
 
 
 var example_judgement = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">congruent</p>'+
-      '<p style="color: black; font-size: 30px; font-weight: bold;">vs</p>'+
-      '<p style="color: black; font-size: 48px; font-weight: bold;">incongruent</p>',
+    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">一致        不一致</p>',
     choices: ['f','j'],
     trial_duration: null,
     //post_trial_gap:1000,
-    prompt:'fj'
+    prompt:'</br>如果一致则按f，不一致按j',
   };
 
 var example_recon = {
@@ -242,13 +255,60 @@ var prac_feedback = {
 
 
 
+
+
+
+
 var prac_variables = [
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',condition: 'congruent'},
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r04/000001.webp',condition: 'incongruent'},
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r08/000001.webp',condition: 'congruent'},
-  ];
+//wheel01
+{cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[1],condition: 'incongruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[2],condition: 'incongruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[3],condition: 'incongruent', recon: img_dir[0]},
+{cue:cue_scene[0],target: target_dir[4],condition: 'incongruent', recon: img_dir[0]},
+//wheel02
+{cue:cue_scene[1],target: target_dir[0],condition: 'congruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[1],condition: 'incongruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[2],condition: 'incongruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[3],condition: 'incongruent', recon: img_dir[1]},
+{cue:cue_scene[1],target: target_dir[4],condition: 'incongruent', recon: img_dir[1]},
+//wheel03
+{cue:cue_scene[2],target: target_dir[0],condition: 'congruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[1],condition: 'congruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[2],condition: 'incongruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[2],condition: 'incongruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[3],condition: 'incongruent', recon: img_dir[2]},
+{cue:cue_scene[2],target: target_dir[4],condition: 'incongruent', recon: img_dir[2]},
+//wheel04
+{cue:cue_scene[3],target: target_dir[0],condition: 'congruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[1],condition: 'congruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[2],condition: 'congruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+{cue:cue_scene[3],target: target_dir[4],condition: 'incongruent', recon: img_dir[3]},
+//wheel05
+{cue:cue_scene[4],target: target_dir[0],condition: 'congruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[1],condition: 'congruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[2],condition: 'congruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[3],condition: 'congruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+{cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+//
+];
 
-
+var prac_variables_subset = jsPsych.randomization.sampleWithoutReplacement(prac_variables, 4);
 
 var practimeline = [
     prac_cue,
@@ -260,15 +320,15 @@ var practimeline = [
   
 var prac_proc = {
     timeline: practimeline,
-    timeline_variables: prac_variables,
+    timeline_variables: prac_variables_subset,
     randomize_order: true,
     loop_function: function(data){
-        var total_trials = jsPsych.data.get().last().filter({type: 'judgement'}).count();
-        var accuracy = Math.round(jsPsych.data.get().last().filter({correct: true}).count() / total_trials * 100);
-        if (accuracy >= 80) {
-            return false;
-      } else {
+        var total_trials = jsPsych.data.get().filter({type: 'judgement'}).count();
+        var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+        if (accuracy < 60) {
             return true;
+      } else {
+            return false;
       }       
     }
   };
@@ -326,15 +386,77 @@ var test_judgement = {
 
 var test_recon = {
     type: jsPsychReconstruct_wheel,
-    image_path: 'img/sceneWheel_images_webp/Wheel05/wheel05_r02',
+    image_path: jsPsych.timelineVariable('recon'),
     image_format: 'webp',
     uncertainty_range: true
   }
 
+
+var cue_scene = ['Wheel01',
+                 'Wheel02',
+                 'Wheel03',
+                 'Wheel04',
+                 'Wheel05']
+
+var target_dir =['img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',
+             'img/sceneWheel_images_webp/Wheel02/wheel02_r02/000001.webp',
+             'img/sceneWheel_images_webp/Wheel03/wheel03_r02/000001.webp',
+             'img/sceneWheel_images_webp/Wheel04/wheel04_r02/000001.webp',
+             'img/sceneWheel_images_webp/Wheel05/wheel05_r02/000001.webp']
+
+var img_dir = ['img/sceneWheel_images_webp/Wheel01/wheel01_r02',
+               'img/sceneWheel_images_webp/Wheel02/wheel02_r02',
+               'img/sceneWheel_images_webp/Wheel03/wheel03_r02',
+               'img/sceneWheel_images_webp/Wheel04/wheel04_r02',
+               'img/sceneWheel_images_webp/Wheel05/wheel05_r02',]
+
 var test_variables = [
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',condition: 'congruent'},
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r04/000001.webp',condition: 'incongruent'},
-    {cue:'Wheel01',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r08/000001.webp',condition: 'congruent'},
+    //wheel01
+    {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[1],condition: 'incongruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[2],condition: 'incongruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[3],condition: 'incongruent', recon: img_dir[0]},
+    {cue:cue_scene[0],target: target_dir[4],condition: 'incongruent', recon: img_dir[0]},
+    //wheel02
+    {cue:cue_scene[1],target: target_dir[0],condition: 'congruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[1],condition: 'incongruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[2],condition: 'incongruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[3],condition: 'incongruent', recon: img_dir[1]},
+    {cue:cue_scene[1],target: target_dir[4],condition: 'incongruent', recon: img_dir[1]},
+    //wheel03
+    {cue:cue_scene[2],target: target_dir[0],condition: 'congruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[1],condition: 'congruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[2],condition: 'incongruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[2],condition: 'incongruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[3],condition: 'incongruent', recon: img_dir[2]},
+    {cue:cue_scene[2],target: target_dir[4],condition: 'incongruent', recon: img_dir[2]},
+    //wheel04
+    {cue:cue_scene[3],target: target_dir[0],condition: 'congruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[1],condition: 'congruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[2],condition: 'congruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[3],condition: 'incongruent', recon: img_dir[3]},
+    {cue:cue_scene[3],target: target_dir[4],condition: 'incongruent', recon: img_dir[3]},
+    //wheel05
+    {cue:cue_scene[4],target: target_dir[0],condition: 'congruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[1],condition: 'congruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[2],condition: 'congruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[3],condition: 'congruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+    {cue:cue_scene[4],target: target_dir[4],condition: 'incongruent', recon: img_dir[4]},
+    //
   ];
 
 
