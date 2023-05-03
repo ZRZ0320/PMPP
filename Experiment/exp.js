@@ -28,30 +28,24 @@ var recon_images = [];
         }
       }
     } 
-var cue_scene = ['Wheel01',
-  'Wheel02',
-  'Wheel03',
-  'Wheel04',
-  'Wheel05']
-
-var target_dir =['img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',
-'img/sceneWheel_images_webp/Wheel02/wheel02_r02/000001.webp',
-'img/sceneWheel_images_webp/Wheel03/wheel03_r02/000001.webp',
-'img/sceneWheel_images_webp/Wheel04/wheel04_r02/000001.webp',
-'img/sceneWheel_images_webp/Wheel05/wheel05_r02/000001.webp']
 
 var img_dir = ['img/sceneWheel_images_webp/Wheel01/wheel01_r02',
 'img/sceneWheel_images_webp/Wheel02/wheel02_r02',
 'img/sceneWheel_images_webp/Wheel03/wheel03_r02',
 'img/sceneWheel_images_webp/Wheel04/wheel04_r02',
-'img/sceneWheel_images_webp/Wheel05/wheel05_r02',]
+'img/sceneWheel_images_webp/Wheel05/wheel05_r02']
+
+
+
+
+
 
 /*set up instruction block*/
 var fullscreen_trial = {
     type: jsPsychFullscreen,
     fullscreen_mode: true,
     message: '<p>这个实验将会切换到全屏进行</p>',
-    button_label: '<p>全屏</p>'
+    button_label: '全屏'
   };
 
 
@@ -133,14 +127,17 @@ var example_judgement = {
 
 var example_recon = {
     type: jsPsychReconstruct_wheel,
-    image_path: 'img/sceneWheel_images_webp/Wheel05/wheel05_r02',
+    image_path: jsPsych.timelineVariable('recon'),
     image_format: 'webp',
-    uncertainty_range: true
+    uncertainty_range: true,
+    random_circle_rotation: true,
+    //starting_value: ('00000'+Math.floor(Math.random()*360)).slice(-6).toString(),
   }
 
 var confirmation = {
    type: jsPsychHtmlKeyboardResponse,
-    stimulus: 'Are you ready to proceed to the next phase?',
+    stimulus: '<p>你准备好进入下一个阶段了吗?</p>'+
+              '<p>如果准备好了请按“f”键进入下一个阶段，没有准备好就按“j”键继续</p>',
     choices: ['f', 'j'],
     data: {type: 'confirmation'},
   };
@@ -148,7 +145,7 @@ var confirmation = {
 
 
 var extimeline_variables = [
-    {cue:'example',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp'},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
   ];
 
 
@@ -180,12 +177,12 @@ var example_proc = {
 /*set up prac block*/
 var prac_instruction = {
     type: jsPsychInstructions,
-    pages: ['<p><b>Welcome to the practice procedure</b></p><br>',],
+    pages: ['<p><b>欢迎来到练习阶段</b></p><br>',],
     show_clickable_nav: true,
     show_page_number: true,
-    button_label_previous: 'Previous',
-    button_label_next: 'Next',
-    page_label: 'Page',
+    button_label_previous: '上一页',
+    button_label_next: '下一页',
+    page_label: '页码',
   };
 
 
@@ -197,7 +194,7 @@ var prac_cue = {
            type: 'cue'},
     choices: "ALL_KEYS",
     trial_duration: null,
-    prompt:'any'
+    prompt:'按任意键继续'
   }
   
   
@@ -211,15 +208,13 @@ var prac_target = {
     stimulus_width: 400, 
     maintain_aspect_ratio: true,
     post_trial_gap: 0,
-    prompt:'</br>any',
+    prompt:'</br>按任意键继续',
   };
 
 
 var prac_judgement = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">congruent</p>'+
-      '<p style="color: black; font-size: 30px; font-weight: bold;">vs</p>'+
-      '<p style="color: black; font-size: 48px; font-weight: bold;">incongruent</p>',
+    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">一致        不一致</p>',
     choices: ['f','j'],
     data: {type: 'judgement',
            condition: jsPsych.timelineVariable('condition')},
@@ -233,14 +228,16 @@ var prac_judgement = {
         data.correct = correct;
     },
     trial_duration: null,
-    prompt:'fj'
+    prompt:'一致按“f”键，不一致按“j”键'
   };
 
 var prac_recon = {
     type: jsPsychReconstruct_wheel,
-    image_path: 'img/sceneWheel_images_webp/Wheel05/wheel05_r02',
+    image_path: jsPsych.timelineVariable('recon'),
     image_format: 'webp',
-    uncertainty_range: true
+    uncertainty_range: true,
+    random_circle_rotation: true,
+    //starting_value: ('00000'+Math.floor(Math.random()*360)).slice(-6).toString(),
   };
 
 var prac_feedback = {
@@ -248,67 +245,64 @@ var prac_feedback = {
     stimulus: function() {
         var total_trials = jsPsych.data.get().filter({type: 'judgement'}).count();
         var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-        return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the trials.</p> " +
-        "<p>Press any key to complete the experiment. Thank you!</p>";
+        return "<p>你当前的正确率为 <strong>"+accuracy+"%</strong></p> " +
+        "<p>按任意键结束</p>";
     }
   };
 
-
-
-
-
-
-
 var prac_variables = [
   //wheel01
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[1],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[2],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[3],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[4],condition: 'incongruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景1',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景1',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景1',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel02
-  {cue:cue_scene[1],target: target_dir[0],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[2],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[3],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[4],condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景2',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景2',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel03
-  {cue:cue_scene[2],target: target_dir[0],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[1],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[3],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[4],condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景3',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景3',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel04
-  {cue:cue_scene[3],target: target_dir[0],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[1],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[2],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[4],condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景4',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景4',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel05
-  {cue:cue_scene[4],target: target_dir[0],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[1],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[2],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[3],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景5',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景5',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景5',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
 //
 ];
 
-var prac_variables_subset = jsPsych.randomization.sampleWithoutReplacement(prac_variables, 4);
+
+
+var prac_variables_rp = jsPsych.randomization.repeat(prac_variables, 1, false);
+
+
 
 var practimeline = [
     prac_cue,
@@ -320,7 +314,7 @@ var practimeline = [
   
 var prac_proc = {
     timeline: practimeline,
-    timeline_variables: prac_variables_subset,
+    timeline_variables: prac_variables_rp,
     randomize_order: true,
     loop_function: function(data){
         var total_trials = jsPsych.data.get().filter({type: 'judgement'}).count();
@@ -339,12 +333,12 @@ var prac_proc = {
 /*set up test block*/
 var test_instruction = {
     type: jsPsychInstructions,
-    pages: ['<p><b>Welcome to the test procedure</b></p><br>',],
+    pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
     show_clickable_nav: true,
     show_page_number: true,
-    button_label_previous: 'Previous',
-    button_label_next: 'Next',
-    page_label: 'Page',
+    button_label_previous: '上一页',
+    button_label_next: '下一页',
+    page_label: '页码',
   };
 
 
@@ -355,7 +349,6 @@ var test_cue = {
            type: 'cue'},
     choices: "ALL_KEYS",
     trial_duration: null,
-    prompt:'any'
   }
   
   
@@ -369,26 +362,24 @@ var test_target = {
     stimulus_width: 400, 
     maintain_aspect_ratio: true,
     post_trial_gap: 0,
-    prompt:'</br>any',
   };
 
 
 var test_judgement = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">congruent</p>'+
-      '<p style="color: black; font-size: 30px; font-weight: bold;">vs</p>'+
-      '<p style="color: black; font-size: 48px; font-weight: bold;">incongruent</p>',
+    stimulus: '<p style="color: black; font-size: 48px; font-weight: bold;">一致        不一致</p>',
     data: {type: 'judgement'},
     choices: ['f','j'],
     trial_duration: null,
-    prompt:'fj'
   };
 
 var test_recon = {
     type: jsPsychReconstruct_wheel,
     image_path: jsPsych.timelineVariable('recon'),
     image_format: 'webp',
-    uncertainty_range: true
+    uncertainty_range: true,
+    random_circle_rotation: true,
+    //starting_value: ('00000'+Math.floor(Math.random()*360)).slice(-6).toString(),
   }
 
 
@@ -396,54 +387,53 @@ var test_recon = {
 
 var test_variables = [
   //wheel01
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[1],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[2],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[3],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[4],condition: 'incongruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景1',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景1',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景1',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel02
-  {cue:cue_scene[1],target: target_dir[0],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[2],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[3],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[4],condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景2',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景2',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel03
-  {cue:cue_scene[2],target: target_dir[0],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[1],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[3],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[4],condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景3',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景3',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel04
-  {cue:cue_scene[3],target: target_dir[0],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[1],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[2],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[4],condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景4',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景4',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel05
-  {cue:cue_scene[4],target: target_dir[0],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[1],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[2],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[3],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景5',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景5',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景5',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //
 ];
 
-
+var test_variables_rp = jsPsych.randomization.repeat(test_variables, 1, false);
 
 var testtimeline = [
     test_cue,
@@ -454,20 +444,18 @@ var testtimeline = [
   
 var test_proc = {
     timeline: testtimeline,
-    timeline_variables: test_variables,
-    randomize_order: true,
-    repetitions: 5,
+    timeline_variables: test_variables_rp,
   };
 
 /*set up test2 block*/
 var test2_instruction = {
   type: jsPsychInstructions,
-  pages: ['<p><b>Welcome to the test procedure</b></p><br>',],
+  pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
   show_clickable_nav: true,
   show_page_number: true,
-  button_label_previous: 'Previous',
-  button_label_next: 'Next',
-  page_label: 'Page',
+  button_label_previous: '上一页',
+  button_label_next: '下一页',
+  page_label: '页码',
 };
 
 
@@ -478,7 +466,6 @@ var test2_cue = {
          type: 'cue'},
   choices: "ALL_KEYS",
   trial_duration: null,
-  prompt:'any'
 }
 
 
@@ -492,7 +479,6 @@ var test2_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  prompt:'</br>any',
 };
 
 
@@ -504,14 +490,15 @@ var test2_judgement = {
   data: {type: 'judgement'},
   choices: ['f','j'],
   trial_duration: null,
-  prompt:'fj'
 };
 
 var test2_recon = {
   type: jsPsychReconstruct_wheel,
   image_path: jsPsych.timelineVariable('recon'),
   image_format: 'webp',
-  uncertainty_range: true
+  uncertainty_range: true,
+  random_circle_rotation: true,
+  //starting_value: jsPsych.timelineVariable('starting_value'),
 }
 
 
@@ -519,54 +506,53 @@ var test2_recon = {
 
 var test2_variables = [
   //wheel01
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[0],condition: 'congruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[1],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[2],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[3],condition: 'incongruent', recon: img_dir[0]},
-  {cue:cue_scene[0],target: target_dir[4],condition: 'incongruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景1',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景1',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景1',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景1',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel02
-  {cue:cue_scene[1],target: target_dir[0],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[1],condition: 'congruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[2],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[3],condition: 'incongruent', recon: img_dir[1]},
-  {cue:cue_scene[1],target: target_dir[4],condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[1]},
+  {cue:'场景2',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景2',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景2',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel03
-  {cue:cue_scene[2],target: target_dir[0],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[1],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[2],condition: 'congruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[3],condition: 'incongruent', recon: img_dir[2]},
-  {cue:cue_scene[2],target: target_dir[4],condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景3',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[2]},
+  {cue:'场景3',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景3',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel04
-  {cue:cue_scene[3],target: target_dir[0],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[1],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[2],condition: 'incongruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[3],condition: 'congruent', recon: img_dir[3]},
-  {cue:cue_scene[3],target: target_dir[4],condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景4',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景4',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[3]},
+  {cue:'场景4',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
   //wheel05
-  {cue:cue_scene[4],target: target_dir[0],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[1],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[2],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[3],condition: 'incongruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  {cue:cue_scene[4],target: target_dir[4],condition: 'congruent', recon: img_dir[4]},
-  //
+  {cue:'场景5',target: img_dir[0]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[0]},
+  {cue:'场景5',target: img_dir[1]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[1]},
+  {cue:'场景5',target: img_dir[2]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[2]},
+  {cue:'场景5',target: img_dir[3]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'congruent', recon: img_dir[3]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
+  {cue:'场景5',target: img_dir[4]+'/'+('00000'+Math.floor(Math.random()*360)).slice(-6).toString()+'.webp',condition: 'incongruent', recon: img_dir[4]},
 ];
 
 
+var test2_variables_rp = jsPsych.randomization.repeat(test2_variables, 1, false);
 
 var test2timeline = [
   test2_cue,
@@ -577,16 +563,14 @@ var test2timeline = [
 
 var test2_proc = {
   timeline: test2timeline,
-  timeline_variables: test2_variables,
-  randomize_order: true,
-  repetitions: 5,
+  timeline_variables: test2_variables_rp,
 };
 
 
 /*set the end slide*/
 var end ={
     type: jsPsychInstructions,
-    pages: ['<p><b>Thank you for your participation!</b></p><br>',],
+    pages: ['<p><b>感谢您的参与！</b></p><br>',],
     show_clickable_nav: true,
     show_page_number: true,
     on_finish: function () {
