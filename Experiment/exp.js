@@ -85,7 +85,7 @@ var instructions = {
 var example_instruction = {
     type: jsPsychInstructions,
     pages: ['<p><b>欢迎进入示例流程</b></p><br>'+
-    '<p>在本次实验中，你将会看到一个提示，随后将出现一幅图片，请判断图片与提示是否一致，并用鼠标选择你印象中最近接近该刺激的图片</p>'],
+    '<p>在本次实验中，你将会看到一个提示，随后将出现一幅图片，请判断图片与提示是否一致，并用鼠标选择你印象中最接近该刺激的图片</p>'],
     show_clickable_nav: true,
     show_page_number: true,
     button_label_previous: '上一页',
@@ -108,7 +108,7 @@ var example_target = {
     type: jsPsychImageKeyboardResponse,
     stimulus: jsPsych.timelineVariable('target'),
     choices: "ALL_KEYS",
-    trial_duration: null,
+    trial_duration: 200,
     stimulus_width: 400, 
     maintain_aspect_ratio: true,
     post_trial_gap: 0,
