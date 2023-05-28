@@ -143,13 +143,16 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         class="indicator-circle"></canvas>
         <img src="${this.params.image_path}/${this.img_num}.${this.params.image_format}"
         width="${this.params.image_width}" height="${this.params.image_height}"></div>`      
+        
         var answer_html = ``;
+
         if(this.params.show_answer==true){  
           var answer_img_num =  ('000000'+this.params.answer_image).slice(-6)     
           answer_html=`<div id="arena_${this.params.answer_position}">
           <img src="${this.params.image_path}/${answer_img_num}.${this.params.image_format}" 
           width="${this.params.answer_image_width}" height="${this.params.answer_image_height}"></div>`;
         }
+        
         let display_html;
         display_html=`<div id="base_container">${canvas_html}${answer_html}</div>`
         this.display.innerHTML=display_html;
