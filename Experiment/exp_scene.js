@@ -397,15 +397,15 @@ var prac_proc = {
   timeline: practimeline,
   timeline_variables: prac_variables,
   randomize_order: true,
-//  loop_function: function(data){
-//      var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
-//      var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-//      if (accuracy < 60) {
-//          return true;
-//    } else {
-//          return false;
-//    }       
-//  }
+  loop_function: function(data){
+      var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
+      var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+      if (accuracy < 60) {
+          return true;
+    } else {
+          return false;
+    }       
+  }
 };
 
 
