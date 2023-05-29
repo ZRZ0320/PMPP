@@ -150,9 +150,6 @@ var example_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  data: {type: 'example_target',
-  cue: jsPsych.timelineVariable('cue'),
-  target: jsPsych.timelineVariable('target'),
   data: {type: 'target',
   'cue': jsPsych.timelineVariable('cue'),
   'target': jsPsych.timelineVariable('target'),
@@ -189,9 +186,16 @@ var example_target = {
   }
     
     },
+  on_finish: function(data) {
+      var correct = false;
+      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+          correct = true;
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+          correct = true;
+      }
+      data.correct = correct;
   },
-  prompt:'</br>按任意键继续',
-};
+  }
 
 
 var example_recon = {
@@ -315,9 +319,17 @@ var prac_target = {
       }
     }
     return condition;
-  }
-    
-    },
+  },
+},
+  on_finish: function(data) {
+      var correct = false;
+      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+          correct = true;
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+          correct = true;
+      }
+      data.correct = correct;
+  },
   //prompt:'</br>按任意键继续',
 };
 
@@ -468,6 +480,15 @@ var test1_target = {
   }
     
     },
+  on_finish: function(data) {
+      var correct = false;
+      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+          correct = true;
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+          correct = true;
+      }
+      data.correct = correct;
+  },
   //prompt:'</br>按任意键继续',
 };
 
@@ -633,6 +654,15 @@ var test2_target = {
     
     },
   //prompt:'</br>按任意键继续',
+  on_finish: function(data) {
+      var correct = false;
+      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+          correct = true;
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+          correct = true;
+      }
+      data.correct = correct;
+  },
 };
 
 

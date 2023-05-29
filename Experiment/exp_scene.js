@@ -152,11 +152,7 @@ var example_target = {
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    console.log(jsPsych.timelineVariable('target'));
-    console.log(jsPsych.timelineVariable('cue'));    
-    console.log(num);
     if (jsPsych.timelineVariable('cue') == 'livingroom'){
-      console.log(jsPsych.timelineVariable('cue') == 'livingroom');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
@@ -182,6 +178,15 @@ var example_target = {
   }
     
     },
+    on_finish: function(data) {
+      var correct = false;
+      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+          correct = true;
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+          correct = true;
+      }
+      data.correct = correct;
+  },
   prompt:'</br>按任意键继续',
 };
 
@@ -287,9 +292,6 @@ var prac_target = {
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    console.log(jsPsych.timelineVariable('target'));
-    console.log(jsPsych.timelineVariable('cue'));    
-    console.log(num);
     if (jsPsych.timelineVariable('cue') == 'livingroom'){
       console.log(jsPsych.timelineVariable('cue') == 'livingroom');
       if (num < 60 | num >= 300){
@@ -318,6 +320,15 @@ var prac_target = {
     
     },
   //prompt:'</br>按任意键继续',
+  on_finish: function(data) {
+    var correct = false;
+    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+        correct = true;
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+        correct = true;
+    }
+    data.correct = correct;
+},
 };
 
 
@@ -470,6 +481,15 @@ var test1_target = {
     
     },
   //prompt:'</br>按任意键继续',
+  on_finish: function(data) {
+    var correct = false;
+    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+        correct = true;
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+        correct = true;
+    }
+    data.correct = correct;
+},
 };
 
 
@@ -636,6 +656,15 @@ var test2_target = {
     
     },
   //prompt:'</br>按任意键继续',
+  on_finish: function(data) {
+    var correct = false;
+    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+        correct = true;
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+        correct = true;
+    }
+    data.correct = correct;
+},
 };
 
 
