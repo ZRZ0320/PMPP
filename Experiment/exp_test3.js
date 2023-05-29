@@ -55,8 +55,44 @@ var example_target = {
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
   prompt:'</br>按任意键继续',
-  data: {type: 'target'},
+  data: {type: 'target',
+  'cue': jsPsych.timelineVariable('cue'),
+  'target': jsPsych.timelineVariable('target'),
+  'condition': function(){
+    var str = jsPsych.timelineVariable('target');
+    var num = parseInt(str.match(/\d+/));
+    console.log(jsPsych.timelineVariable('target'));
+    console.log(jsPsych.timelineVariable('cue'));    
+    console.log(num);
+    if (jsPsych.timelineVariable('cue') == 'red'){
+      console.log(jsPsych.timelineVariable('cue') == 'red');
+      if (num < 60 | num >= 300){
+        var condition = 1;
+      }else{
+        var condition = 0;
+      }
+    }else if(jsPsych.timelineVariable('cue') == 'blue'){
+      
+      //console.log(jsPsych.timelineVariable('cue') == 'blue');
+      if (num < 180 &&  num >= 60){
+        var condition = 1;
+      }else{
+        var condition = 0;
+      }
+    }else{
+      //console.log(jsPsych.timelineVariable('cue') == 'green');
+      if (num < 300 && num >= 180){
+        var condition = 1;
+      }else{
+        var condition = 0;
+      }
+    }
+    return condition;
+  }
+    
+    },
 };
+
 
 var example_recon = {
     type: jsPsychReconstruct_colorwheel,
@@ -81,13 +117,14 @@ var iti = {
 };
 
 
+
+
+
+
 var extimeline_variables = [
-    {cue:'示例',target: 'img/color/color_001.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-    {cue:'示例',target: 'img/color/color_011.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-    {cue:'示例',target: 'img/color/color_001.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-    {cue:'示例',target: 'img/color/color_011.png',tdtime:Math.floor(Math.random() * 500) + 1000},    
-    {cue:'示例',target: 'img/color/color_001.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-    {cue:'示例',target: 'img/color/color_011.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+    {cue:'red',target: 'img/color/color_300.png', tdtime:Math.floor(Math.random() * 500) + 1000},
+    {cue:'red',target: 'img/color/color_011.png', tdtime:Math.floor(Math.random() * 500) + 1000},
+    {cue:'blue',target: 'img/color/color_001.png', tdtime:Math.floor(Math.random() * 500) + 1000},
   ];
 
 
