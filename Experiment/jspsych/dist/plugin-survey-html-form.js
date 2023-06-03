@@ -74,7 +74,7 @@ var jsPsychSurveyHtmlForm = (function (jspsych) {
           html += trial.html;
           // add submit button
           html +=
-              '<input type="submit" id="jspsych-survey-html-form-next" class="jspsych-btn jspsych-survey-html-form" value="' +
+              '<input style="font-size: 30px; font-family: SimSun;" type="submit" id="jspsych-survey-html-form-next" class="jspsych-btn jspsych-survey-html-form" value="' +
                   trial.button_label +
                   '"></input>';
           html += "</form>";

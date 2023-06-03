@@ -318,7 +318,7 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
           var rel_cy = (rect.height/2)-this.params.indicator_wheel_width;     
           var pcx = Math.cos(this.angles.mouse_angle) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius); // pointer center
           var pcy = Math.sin(this.angles.mouse_angle) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius);        
-          this.draw_pointer(pcx+rel_cx, pcy+rel_cy, this.params.indicator_pointer_radius, 'red');
+          this.draw_pointer(pcx+rel_cx, pcy+rel_cy, this.params.indicator_pointer_radius, 'gray');
         } 
         // record data
         this.trial_data={};
@@ -357,7 +357,7 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
             ctx.clearRect(0, 0, this.params.indicator_wheel_diameter, this.params.indicator_wheel_diameter);            
             ctx.beginPath();
             ctx.lineWidth = 5;
-            ctx.strokeStyle = 'red';
+            ctx.strokeStyle = 'gray';
             ctx.arc(rect.width/2-this.params.indicator_wheel_width, rect.height/2-this.params.indicator_wheel_width, rad, 
               start-this.half_range, start+this.half_range);
             ctx.stroke();

@@ -67,7 +67,7 @@ var jsPsychFullscreen = (function (jspsych) {
       showDisplay(display_element, trial) {
           display_element.innerHTML = `
       ${trial.message}
-      <button id="jspsych-fullscreen-btn" class="jspsych-btn">${trial.button_label}</button>
+      <button id="jspsych-fullscreen-btn" class="jspsych-btn" style="font-size: 30px; font-family: SimSun;">${trial.button_label}</button>
     `;
           display_element.querySelector("#jspsych-fullscreen-btn").addEventListener("click", () => {
               this.enterFullScreen();

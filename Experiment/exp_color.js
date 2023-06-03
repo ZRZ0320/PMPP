@@ -8,82 +8,99 @@ var jsPsych = initJsPsych({
   }
 );
 
-
+var dir = 'img/instructions_color/';
 
 var basic_information = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: `
-   <p>本实验首先需要您填写一些基本个人信息。</p>
-   <p> <div style = "color: green"><按任意键至下页></div></p>
-   `,
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'info.png',
   choices: "ALL_KEYS",
 };
 
 var subj_idx = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的被试编号是?</b> </p>',
-  html: '<p> <input name="subj_idx" type="text" />.</p>'
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
+  html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
+  button_label: "继续",
 };
 
 
 var subj_age = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的出生年份是?</b> </p>',
-  html:` <p>
-  <input name="Born" type="number" placeholder="1980~2023" min=1980 max=2023 oninput="if(value.length>4) value=value.slice(0,4)" required />
-  </p>`
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的出生年份是?</b> </p>',
+  html:` <p style="font-size: 40px; font-family: SimSun;">
+  <input style="font-size: 20px; font-family: SimSun;" name="Born" type="number" placeholder="1980~2023" min=1980 max=2023 oninput="if(value.length>4) value=value.slice(0,4)" value="1990" required>
+  </p>`,
+  button_label: "继续",
 };
 
 var subj_sex = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的性别是?</b> </p>',
-  html: function () {
-    return `
-              <p><select name="sex" size=3>
-              <option value=1>男</option>
-              <option value=2>女</option>
-              </select></p>`
-  },
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的性别是?</b> </p>',
+  html:  `<p style="font-size: 40px; font-family: SimSun;"><select name="sex" size=3 required>
+              <option style="font-size: 20px; font-family: SimSun;" value=1 selected>男</option>
+              <option style="font-size: 20px; font-family: SimSun;" value=2>女</option>
+              </select></p>`,
+  button_label: "继续",
 }
 var subj_education = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的受教育程度是?</b> </p>',
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的受教育程度是?</b> </p>',
   html: function () {
     return `
-              <p><select name="education" size=10>
+              <p style="font-size: 40px; font-family: SimSun;"><select name="education" size=10 required>
               <option value=1>小学以下</option>
               <option value=2>小学</option>
               <option value=3>初中</option>
               <option value=4>高中</option>
-              <option value=5>大学</option>
+              <option value=5 selected>大学</option>
               <option value=6>硕士</option>
               <option value=7>博士</option>
               <option value=8>其他</option>
               </select></p>`
   },
+  button_label: "继续",
 }
 
 
 var recon_images = [];
-for (k=0;k<5;k++){
-  for (j=0;j<5;j++){
-    for (i = 0; i <360; i++){
-      recon_images.push('img/color/color_'+
-      ('00'+i).slice(-3).toString()+
-      '.png')
-      }
-    }
-  } 
+var img_dir = 'img/color/';
+for (i = 0; i <360; i++){
+  recon_images.push('img/color/color_'+
+  ('00'+i).slice(-3).toString()+
+  '.png')
+  }
+recon_images.push(dir+'intro1.png');
+recon_images.push(dir+'intro2.png');
+recon_images.push(dir+'intro3.png');
+recon_images.push(dir+'intro4.png');
+recon_images.push(dir+'intro5.png');
+recon_images.push(dir+'intro6.png');
+recon_images.push(dir+'info.png');
+recon_images.push(dir+'example1.png');
+recon_images.push(dir+'example2.png');
+recon_images.push(dir+'red.png');
+recon_images.push(dir+'blue.png');
+recon_images.push(dir+'green.png');
+recon_images.push(dir+'prac1.png');
+recon_images.push(dir+'prac2.png');
+recon_images.push(dir+'test1.png');
+recon_images.push(dir+'test2.png');
+recon_images.push(dir+'test3.png');
+
+
+
+
+
 
 var preload_images = [[recon_images]];
 
-var img_dir = 'img/color/';
+
 
 /*set up instruction block*/
 var fullscreen_trial = {
   type: jsPsychFullscreen,
   fullscreen_mode: true,
-  message: '<p>这个实验将会切换到全屏进行</p>',
+  message: '<p style="font-size: 30px; font-family: SimSun;">当你按下“全屏”按钮后，这个实验将会切换到全屏</p>',
   button_label: '全屏'
 };
 
@@ -95,49 +112,63 @@ var preload = {
   auto_preload: true
 };
 
+
+
+
+
+/*set up intro block*/
 var instructions = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎参加本次实验</b></p>'+
-    '<br>'+
-    '<p>在本次实验中，你将会看到一系列颜色，请尝试记住并回忆这些颜色</p>'+
-    '<p>稍后你将进入一个示例环节，体验该实验的流程</p>'+
-    '</br>'+
-    '<p>请点击"下一页"的按钮以进入下一个环节</p>'],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: jsPsych.timelineVariable('stimulus'),
+  choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "none");
  }
 };
 
+var intro_variables = [
+  {stimulus: dir+'intro1.png'},
+  {stimulus: dir+'intro2.png'},
+  {stimulus: dir+'intro3.png'},
+  {stimulus: dir+'intro4.png'},
+  {stimulus: dir+'intro5.png'},
+  {stimulus: dir+'intro6.png'},
+  
+];
 
+var intimeline = [
+  instructions
+];
 
-
-/*set up example block*/
-var example_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎进入示例流程</b></p><br>'+
-  '<p>在本次实验中，你将会看到一个提示，随后将出现一种颜色，请判断颜色与提示是否一致，并用鼠标选择你印象中最接近该刺激的颜色</p>'],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+var into_proc = {
+  timeline: intimeline,
+  timeline_variables: intro_variables,
+  randomize_order:false,
 };
 
 
+/*set up example block*/
+var example_instruction1 = {
+    type: jsPsychImageKeyboardResponse,
+    stimulus: dir+'example1.png',
+    choices: "ALL_KEYS",
+  };
+
+
+var example_fix = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<p style="font-size: 30px; font-family: SimSun;">+</p>',
+  choices: "NO_KEYS",
+  trial_duration: 500,
+}
 
 var example_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
   data: {type: 'example_cue',
   cue: jsPsych.timelineVariable('cue')},
-  prompt:'按任意键继续'
 }
 
 
@@ -157,10 +188,10 @@ var example_target = {
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
     console.log(jsPsych.timelineVariable('target'));
-    console.log(jsPsych.timelineVariable('cue'));    
-    console.log(num);
+    //console.log(jsPsych.timelineVariable('cue'));    
+    //console.log(num);
     if (jsPsych.timelineVariable('cue') == 'red'){
-      console.log(jsPsych.timelineVariable('cue') == 'red');
+      //console.log(jsPsych.timelineVariable('cue') == 'red');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
@@ -204,35 +235,43 @@ var example_recon = {
   random_circle_rotation: true,
   data: {type: 'example_recon'},
 }
-var example_iti = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
-  choices: "NO_KEYS",
-  trial_duration: jsPsych.timelineVariable('tdtime'),
-  data: {type: 'example_iti',
-  trial_duration: jsPsych.timelineVariable('tdtime')}
-};
+
 
 
 var confirmation = {
- type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>你准备好进入下一个阶段了吗?</p>'+
-            '<p>如果准备好了请按“f”键进入下一个阶段，没有准备好就按“j”键继续</p>',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'example2.png',
   choices: ['f', 'j'],
   data: {type: 'example_confirmation'},
 };
 
-function get_color(){
-  var color = ['red','blue','green'];
-  var color = color[Math.floor(Math.random() * color.length)];
-  return color;
+
+function randomNormalDistribution(u,v) {
+  var mean = 120; 
+  var std_deviation = 10; 
+  var z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v); 
+  var zint = Math.floor(mean + z * std_deviation);
+  if (zint < 0) {
+    zint = 360+zint;
+  }
+  return zint;
+}
+
+function uniformwidth(v,mu,sd) {
+  var z = Math.floor(v*sd*2-sd+mu);
+  if (z < 0) {
+    z = 360+z;
+  }
+  return z;
 }
 
 
+
+
 var extimeline_variables = [
-  {cue:get_color(),target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:get_color(),target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:get_color(),target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png'},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png'},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png'},
 ];
 
 var example_variables_sp = jsPsych.randomization.sampleWithoutReplacement(extimeline_variables, 1);
@@ -240,10 +279,10 @@ var example_variables_sp = jsPsych.randomization.sampleWithoutReplacement(extime
 //console.log(example_variables_sp);
 
 var extimeline = [
+  example_fix,
   example_cue,
   example_target,
   example_recon,
-  example_iti,
   confirmation,
 ];
 
@@ -265,19 +304,20 @@ var example_proc = {
 
 
 /*set up prac block*/
+
+
+
+
+
 var prac_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到练习阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'prac1.png',
+  choices: "ALL_KEYS",
 };
 
 
 var prac_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -304,15 +344,15 @@ var prac_target = {
     var num = parseInt(str.match(/\d+/));
     //console.log(jsPsych.timelineVariable('target'));
     //console.log(jsPsych.timelineVariable('cue'));    
-    //console.log(num);
-    if (jsPsych.timelineVariable('cue') == 'red'){
+    console.log(num);
+    if (jsPsych.timelineVariable('cue') == dir+'red.png'){
       //console.log(jsPsych.timelineVariable('cue') == 'red');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'blue'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'blue.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'blue');
       if (num < 180 &&  num >= 60){
@@ -328,6 +368,7 @@ var prac_target = {
         var condition = 0;
       }
     }
+    console.log(condition);
     return condition;
   },
 },
@@ -355,20 +396,20 @@ var prac_feedback = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function() {
       var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
-      var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-      return "<p>你当前的正确率为 <strong>"+accuracy+"%</strong></p> " +
-      "<p>按任意键结束</p>";},
+      var accuracy = Math.round(jsPsych.data.get().filter({type: 'prac_target', correct: true}).count() / total_trials * 100);
+      return "<p style='font-size: 30px; font-family: SimSun;'>你当前的正确率为 <strong>"+accuracy+"%</strong></p> " +
+      "<p style='font-size: 30px; font-family: SimSun;'>按任意键结束</p>";},
   data: {type: 'prac_feedback',
   correct: function() {
     var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
-    var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+    var accuracy = Math.round(jsPsych.data.get().filter({type: 'prac_target', correct: true}).count() / total_trials * 100);
     return accuracy}},
 
 };
 
 var prac_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'prac_iti',
@@ -379,18 +420,20 @@ var prac_iti = {
 
 var prac_variables = [
   //
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
 ];
 
 
@@ -417,24 +460,25 @@ var prac_proc = {
   }
 };
 
+var prac_end = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'prac2.png',
+  choices: "ALL_KEYS",
+};
 
 
 
 
 /*set up test1 block*/
 var test1_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test1.png',
+  choices: "ALL_KEYS",
 };
 
 
 var test1_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -462,14 +506,14 @@ var test1_target = {
     //console.log(jsPsych.timelineVariable('target'));
     //console.log(jsPsych.timelineVariable('cue'));    
     //console.log(num);
-    if (jsPsych.timelineVariable('cue') == 'red'){
+    if (jsPsych.timelineVariable('cue') == dir+'red.png'){
       //console.log(jsPsych.timelineVariable('cue') == 'red');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'blue'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'blue.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'blue');
       if (num < 180 &&  num >= 60){
@@ -512,7 +556,7 @@ var test1_recon = {
 
 var test1_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'test1_iti',
@@ -523,71 +567,71 @@ var test1_iti = {
 
 var test1_variables = [
 
-  //1
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //2
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //3
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //4
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //5
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+    //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
 ];
 
 
@@ -605,28 +649,17 @@ var test1_proc = {
 
 };
 
-/*rest*/
-var rest = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>休息一下，任意键结束</p>',
-  choices: "ALL_KEYS",
-  response_ends_trial: true,
-};
 
 /*set up test2 block*/
 var test2_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test2.png',
+  choices: "ALL_KEYS",
 };
 
 
 var test2_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -654,14 +687,14 @@ var test2_target = {
     //console.log(jsPsych.timelineVariable('target'));
     //console.log(jsPsych.timelineVariable('cue'));    
     //console.log(num);
-    if (jsPsych.timelineVariable('cue') == 'red'){
+    if (jsPsych.timelineVariable('cue') == dir+'red.png'){
       //console.log(jsPsych.timelineVariable('cue') == 'red');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'blue'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'blue.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'blue');
       if (num < 180 &&  num >= 60){
@@ -704,7 +737,7 @@ var test2_recon = {
 
 var test2_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'test2_iti',
@@ -714,72 +747,71 @@ var test2_iti = {
 
 
 var test2_variables = [
-
-  //6
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //7
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //8
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //9
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //10
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'red',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'blue',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'green',target: 'img/color/color_'+('00'+Math.floor(Math.random() * 360)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+    //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'red.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'blue.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'green.png',target: 'img/color/color_'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
 ];
 
 
@@ -799,10 +831,9 @@ var test2_proc = {
 
 /*set the end slide*/
 var end ={
-  type: jsPsychInstructions,
-  pages: ['<p><b>感谢您的参与！</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test3.png',
+  choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "default");
   }
@@ -827,17 +858,17 @@ timeline.push(subj_age);
 timeline.push(subj_sex);
 timeline.push(subj_education);
 //
-timeline.push(instructions);
-timeline.push(example_instruction);
+timeline.push(into_proc);
+timeline.push(example_instruction1);
 timeline.push(example_proc);
 //
 timeline.push(prac_instruction);
 timeline.push(prac_proc);
+timeline.push(prac_end);
 //
 timeline.push(test1_instruction);
 timeline.push(test1_proc);
-//
-timeline.push(rest);
+
 //
 timeline.push(test2_instruction);
 timeline.push(test2_proc);

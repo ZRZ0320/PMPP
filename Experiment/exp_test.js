@@ -28,36 +28,54 @@ var recon_images = [];
       }
     } 
 
-var img_dir = ['img/sceneWheel_images_webp/Wheel01/wheel01_r02',
-'img/sceneWheel_images_webp/Wheel02/wheel02_r02',
-'img/sceneWheel_images_webp/Wheel03/wheel03_r02',
-'img/sceneWheel_images_webp/Wheel04/wheel04_r02',
-'img/sceneWheel_images_webp/Wheel05/wheel05_r02']
 var preload_images = [[recon_images]];
+
+
+
+//function randomNormalDistribution(u,v) {
+//  var mean = 120; 
+//  var std_deviation = 10; 
+//  var z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v); 
+//  var zint = Math.floor(mean + z * std_deviation);
+//  if (zint < 0) {
+//    zint = 360+zint;
+//  }
+//  return zint;
+//}
+
+
+
+
 
 
 
 
 var example_recon = {
-    type: jsPsychReconstruct_colorwheel,
-    uncertainty_range: true,
-    random_circle_rotation: true,
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+    <p>。</p>
+    `,
+    choices: "ALL_KEYS",
+    data: {'target':jsPsych.timelineVariable('v')},
   }
 
 
 
-
 var extimeline_variables = [
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02'},
-    
+    //{cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:randomNormalDistribution(Math.random(),Math.random())},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
+    {cue:'示例',target: 'img/sceneWheel_images_webp/Wheel01/wheel01_r02/000001.webp',recon:'img/sceneWheel_images_webp/Wheel05/wheel05_r02',v:Math.floor(Math.random()*20-10+180)},
   ];
 
 

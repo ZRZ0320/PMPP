@@ -8,59 +8,58 @@ var jsPsych = initJsPsych({
   }
 );
 
+var dir = 'img/instructions_wheel/';
 
 
 var basic_information = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: `
-   <p>本实验首先需要您填写一些基本个人信息。</p>
-   <p> <div style = "color: dinningroom"><按任意键至下页></div></p>
-   `,
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'info.png',
   choices: "ALL_KEYS",
 };
 
 var subj_idx = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的被试编号是?</b> </p>',
-  html: '<p> <input name="subj_idx" type="text" />.</p>'
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
+  html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
+  button_label: "继续",
 };
 
 
 var subj_age = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的出生年份是?</b> </p>',
-  html:` <p>
-  <input name="Born" type="number" placeholder="1980~2023" min=1980 max=2023 oninput="if(value.length>4) value=value.slice(0,4)" required />
-  </p>`
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的出生年份是?</b> </p>',
+  html:` <p style="font-size: 40px; font-family: SimSun;">
+  <input style="font-size: 20px; font-family: SimSun;" name="Born" type="number" placeholder="1980~2023" min=1980 max=2023 oninput="if(value.length>4) value=value.slice(0,4)" value="1990" required>
+  </p>`,
+  button_label: "继续",
 };
 
 var subj_sex = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的性别是?</b> </p>',
-  html: function () {
-    return `
-              <p><select name="sex" size=3>
-              <option value=1>男</option>
-              <option value=2>女</option>
-              </select></p>`
-  },
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的性别是?</b> </p>',
+  html:  `<p style="font-size: 40px; font-family: SimSun;"><select name="sex" size=3 required>
+              <option style="font-size: 20px; font-family: SimSun;" value=1 selected>男</option>
+              <option style="font-size: 20px; font-family: SimSun;" value=2>女</option>
+              </select></p>`,
+  button_label: "继续",
 }
 var subj_education = {
   type: jsPsychSurveyHtmlForm,
-  preamble: '<p> 你的受教育程度是?</b> </p>',
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的受教育程度是?</b> </p>',
   html: function () {
     return `
-              <p><select name="education" size=10>
+              <p style="font-size: 40px; font-family: SimSun;"><select name="education" size=10 required>
               <option value=1>小学以下</option>
               <option value=2>小学</option>
               <option value=3>初中</option>
               <option value=4>高中</option>
-              <option value=5>大学</option>
+              <option value=5 selected>大学</option>
               <option value=6>硕士</option>
               <option value=7>博士</option>
               <option value=8>其他</option>
               </select></p>`
   },
+  button_label: "继续",
 }
 
 
@@ -72,6 +71,25 @@ for (i = 0; i <360; i++){
   '.webp')
   }
 
+recon_images.push(dir+'intro1.png');
+recon_images.push(dir+'intro2.png');
+recon_images.push(dir+'intro3.png');
+recon_images.push(dir+'intro4.png');
+recon_images.push(dir+'intro5.png');
+recon_images.push(dir+'intro6.png');
+recon_images.push(dir+'info.png');
+recon_images.push(dir+'example1.png');
+recon_images.push(dir+'example2.png');
+recon_images.push(dir+'livingroom.png');
+recon_images.push(dir+'dinningroom.png');
+recon_images.push(dir+'restaurant.png');
+recon_images.push(dir+'prac1.png');
+recon_images.push(dir+'prac2.png');
+recon_images.push(dir+'test1.png');
+recon_images.push(dir+'test2.png');
+recon_images.push(dir+'test3.png');
+
+
 var preload_images = [[recon_images]];
 
 
@@ -79,7 +97,7 @@ var preload_images = [[recon_images]];
 var fullscreen_trial = {
   type: jsPsychFullscreen,
   fullscreen_mode: true,
-  message: '<p>这个实验将会切换到全屏进行</p>',
+  message: '<p style="font-size: 30px; font-family: SimSun;">当你按下“全屏”按钮后，这个实验将会切换到全屏</p>',
   button_label: '全屏'
 };
 
@@ -91,50 +109,61 @@ var preload = {
   auto_preload: true
 };
 
+/*set up intro block*/
 var instructions = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎参加本次实验</b></p>'+
-    '<br>'+
-    '<p>在本次实验中，你将会看到一系列场景，请尝试记住并回忆这些场景</p>'+
-    '<p>稍后你将进入一个示例环节，体验该实验的流程</p>'+
-    '</br>'+
-    '<p>请点击"下一页"的按钮以进入下一个环节</p>'],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: jsPsych.timelineVariable('stimulus'),
+  choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "none");
  }
 };
 
+var intro_variables = [
+  {stimulus: dir+'intro1.png'},
+  {stimulus: dir+'intro2.png'},
+  {stimulus: dir+'intro3.png'},
+  {stimulus: dir+'intro4.png'},
+  {stimulus: dir+'intro5.png'},
+  {stimulus: dir+'intro6.png'},
+  
+];
 
 
+var intimeline = [
+  instructions
+];
 
-/*set up example block*/
-var example_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎进入示例流程</b></p><br>'+
-  '<p>在本次实验中，你将会看到一个提示，随后将出现一种场景，请判断场景与提示是否一致，并用鼠标选择你印象中最接近该刺激的场景</p>'],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+var into_proc = {
+  timeline: intimeline,
+  timeline_variables: intro_variables,
+  randomize_order:false,
 };
 
 
+/*set up example block*/
+var example_instruction1 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'example1.png',
+  choices: "ALL_KEYS",
+};
+
+var example_fix = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: '<p style="font-size: 30px; font-family: SimSun;">+</p>',
+  choices: "NO_KEYS",
+  trial_duration: 500,
+}
 
 var example_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
   data: {type: 'example_cue',
   cue: jsPsych.timelineVariable('cue')},
-  prompt:'按任意键继续'
 }
+
 
 
 var example_target = {
@@ -146,19 +175,19 @@ var example_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  data: {type: 'target',
+  data: {type: 'example_target',
   'cue': jsPsych.timelineVariable('cue'),
   'target': jsPsych.timelineVariable('target'),
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    if (jsPsych.timelineVariable('cue') == 'livingroom'){
+    if (jsPsych.timelineVariable('cue') == dir+'livingroom.png'){
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'bedroom'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 180 &&  num >= 60){
@@ -187,7 +216,6 @@ var example_target = {
       }
       data.correct = correct;
   },
-  prompt:'</br>按任意键继续',
 };
 
 
@@ -203,37 +231,47 @@ var example_recon = {
 }
 
 
-
-var example_iti = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
-  choices: "NO_KEYS",
-  trial_duration: jsPsych.timelineVariable('tdtime'),
-  data: {type: 'example_iti',
-  trial_duration: jsPsych.timelineVariable('tdtime')}
-};
-
-
 var confirmation = {
- type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>你准备好进入下一个阶段了吗?</p>'+
-            '<p>如果准备好了请按“f”键进入下一个阶段，没有准备好就按“j”键继续</p>',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'example2.png',
   choices: ['f', 'j'],
   data: {type: 'example_confirmation'},
 };
 
 
+function randomNormalDistribution(u,v) {
+  var mean = 120; 
+  var std_deviation = 10; 
+  var z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v); 
+  var zint = Math.floor(mean + z * std_deviation);
+  if (zint < 0) {
+    zint = 360+zint;
+  }
+  return zint;
+}
+
+function uniformwidth(v,mu,sd) {
+  var z = Math.floor(v*sd*2-sd+mu);
+  if (z < 0) {
+    z = 360+z;
+  }
+  return z;
+}
 
 var extimeline_variables = [
-  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'livingroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png'},
+  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png'},
+  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png'},
 ];
+
+var example_variables_sp = jsPsych.randomization.sampleWithoutReplacement(extimeline_variables, 1);
 
 
 var extimeline = [
+  example_fix,
   example_cue,
   example_target,
   example_recon,
-  example_iti,
   confirmation,
 ];
 
@@ -256,18 +294,14 @@ var example_proc = {
 
 /*set up prac block*/
 var prac_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到练习阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'prac1.png',
+  choices: "ALL_KEYS",
 };
 
 
 var prac_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -286,20 +320,20 @@ var prac_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  data: {type: 'target',
+  data: {type: 'prac_target',
   'cue': jsPsych.timelineVariable('cue'),
   'target': jsPsych.timelineVariable('target'),
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    if (jsPsych.timelineVariable('cue') == 'livingroom'){
+    if (jsPsych.timelineVariable('cue') == dir+'livingroom.png'){
       console.log(jsPsych.timelineVariable('cue') == 'livingroom');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'bedroom'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 180 &&  num >= 60){
@@ -344,21 +378,21 @@ var prac_recon = {
 var prac_feedback = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function() {
-      var total_trials = jsPsych.data.get().filter({type: 'target'}).count();
-      var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-      return "<p>你当前的正确率为 <strong>"+accuracy+"%</strong></p> " +
-      "<p>按任意键结束</p>";},
+      var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
+      var accuracy = Math.round(jsPsych.data.get().filter({type: 'prac_target', correct: true}).count() / total_trials * 100);
+      return "<p style='font-size: 30px; font-family: SimSun;'>你当前的正确率为 <strong>"+accuracy+"%</strong></p> " +
+      "<p style='font-size: 30px; font-family: SimSun;'>按任意键结束</p>";},
   data: {type: 'prac_feedback',
   correct: function() {
-    var total_trials = jsPsych.data.get().filter({type: 'target'}).count();
-    var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
+    var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
+    var accuracy = Math.round(jsPsych.data.get().filter({type: 'prac_target', correct: true}).count() / total_trials * 100);
     return accuracy}},
 
 };
 
 var prac_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'prac_iti',
@@ -367,21 +401,23 @@ var prac_iti = {
 
 
 
-var prac_variables = [
-  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
 
-  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  
-  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+var prac_variables = [
+  //
+  {cue:dir+'livingroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'livingroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'livingroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:dir+'livingroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),0,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),120,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('00'+uniformwidth(Math.random(),240,30)).slice(-3).toString()+'.png',tdtime:Math.floor(Math.random() * 500) + 1000},
 ];
 
 
@@ -400,7 +436,7 @@ var prac_proc = {
   loop_function: function(data){
       var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
       var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-      if (accuracy < 60) {
+     if (accuracy < 60) {
           return true;
     } else {
           return false;
@@ -408,24 +444,24 @@ var prac_proc = {
   }
 };
 
-
+var prac_end = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'prac2.png',
+  choices: "ALL_KEYS",
+};
 
 
 
 /*set up test1 block*/
 var test1_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test1.png',
+  choices: "ALL_KEYS",
 };
 
 
 var test1_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -444,23 +480,23 @@ var test1_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  data: {type: 'target',
+  data: {type: 'test1_target',
   'cue': jsPsych.timelineVariable('cue'),
   'target': jsPsych.timelineVariable('target'),
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    console.log(jsPsych.timelineVariable('target'));
-    console.log(jsPsych.timelineVariable('cue'));    
-    console.log(num);
+    //console.log(jsPsych.timelineVariable('target'));
+    //console.log(jsPsych.timelineVariable('cue'));    
+    //console.log(num);
     if (jsPsych.timelineVariable('cue') == 'livingroom'){
-      console.log(jsPsych.timelineVariable('cue') == 'livingroom');
+      //console.log(jsPsych.timelineVariable('cue') == dir+'livingroom.png');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'bedroom'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 180 &&  num >= 60){
@@ -505,7 +541,7 @@ var test1_recon = {
 
 var test1_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'test1_iti',
@@ -515,6 +551,36 @@ var test1_iti = {
 
 
 var test1_variables = [
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
   {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
   {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
   {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
@@ -577,30 +643,19 @@ var test1_proc = {
 
 };
 
-/*rest*/
-var rest = {
-  type: jsPsychHtmlKeyboardResponse,
-  stimulus: '<p>休息一下，任意键结束</p>',
-  choices: "All_KEYS",
-  trial_duration: null,
- // prompt:'按任意键继续'
-}
+
 
 
 /*set up test2 block*/
 var test2_instruction = {
-  type: jsPsychInstructions,
-  pages: ['<p><b>欢迎来到测试阶段</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
-  button_label_previous: '上一页',
-  button_label_next: '下一页',
-  page_label: '页码',
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test2.png',
+  choices: "ALL_KEYS",
 };
 
 
 var test2_cue = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
   choices: "NO_KEYS",
   trial_duration: 500,
@@ -619,23 +674,23 @@ var test2_target = {
   stimulus_width: 400, 
   maintain_aspect_ratio: true,
   post_trial_gap: 0,
-  data: {type: 'target',
+  data: {type: 'test2_target',
   'cue': jsPsych.timelineVariable('cue'),
   'target': jsPsych.timelineVariable('target'),
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d+/));
-    console.log(jsPsych.timelineVariable('target'));
-    console.log(jsPsych.timelineVariable('cue'));    
-    console.log(num);
-    if (jsPsych.timelineVariable('cue') == 'livingroom'){
-      console.log(jsPsych.timelineVariable('cue') == 'livingroom');
+    //console.log(jsPsych.timelineVariable('target'));
+    //console.log(jsPsych.timelineVariable('cue'));    
+    //console.log(num);
+    if (jsPsych.timelineVariable('cue') == dir+'livingroom.png'){
+      //console.log(jsPsych.timelineVariable('cue') == 'livingroom');
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
         var condition = 0;
       }
-    }else if(jsPsych.timelineVariable('cue') == 'bedroom'){
+    }else if(jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
       
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 180 &&  num >= 60){
@@ -680,7 +735,7 @@ var test2_recon = {
 
 var test2_iti = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus:'<p>+</p>',
+  stimulus:'<p style="font-size: 30px; font-family: SimSun;">+</p>',
   choices: "NO_KEYS",
   trial_duration: jsPsych.timelineVariable('tdtime'),
   data: {type: 'test2_iti',
@@ -734,6 +789,36 @@ var test2_variables = [
   {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
   {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
   {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+    //
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  //
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  
+  {cue:'bedroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'dinningroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+  {cue:'livingroom',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+Math.floor(Math.random() * 360)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
   
 ];
 
@@ -754,15 +839,15 @@ var test2_proc = {
 
 /*set the end slide*/
 var end ={
-  type: jsPsychInstructions,
-  pages: ['<p><b>感谢您的参与！</b></p><br>',],
-  show_clickable_nav: true,
-  show_page_number: true,
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'test3.png',
+  choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "default");
   }
 
 };
+
 
 
 
@@ -781,17 +866,17 @@ timeline.push(subj_age);
 timeline.push(subj_sex);
 timeline.push(subj_education);
 //
-timeline.push(instructions);
-timeline.push(example_instruction);
+timeline.push(into_proc);
+timeline.push(example_instruction1);
 timeline.push(example_proc);
 //
 timeline.push(prac_instruction);
 timeline.push(prac_proc);
+timeline.push(prac_end);
 //
 timeline.push(test1_instruction);
 timeline.push(test1_proc);
-//
-timeline.push(rest);
+
 //
 timeline.push(test2_instruction);
 timeline.push(test2_proc);
