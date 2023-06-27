@@ -99,7 +99,7 @@ var example_recon = {
     uncertainty_range: true,
     random_circle_rotation: true,
     data: {type: 'recon'},
-  }
+};
 
 
 
@@ -129,10 +129,7 @@ var extimeline_variables = [
 
 
 var extimeline = [
-    example_cue,
-    example_target,
     example_recon,
-    iti,
   ];
   
 var example_proc = {
