@@ -66,7 +66,9 @@ var subj_education = {
   button_label: "继续",
 }
 
-var keys = [keys[0],keys[1]];
+var keys=['ArrowLeft','ArrowRight'];
+
+
 var recon_images = [];
 
 for (i = 0; i <360; i++){
@@ -125,7 +127,6 @@ var instructions = {
 
 
 
-var keys=['ArrowLeft','ArrowRight'];
 
 var intro_variables = [
   {stimulus: dir+'intro1.png'},
