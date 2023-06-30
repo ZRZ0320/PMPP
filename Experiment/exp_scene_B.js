@@ -66,7 +66,7 @@ var subj_education = {
   button_label: "继续",
 }
 
-var keys = [keys[0],keys[1]];
+var keys=['ArrowRight','ArrowLeft'];
 var recon_images = [];
 
 for (i = 0; i <360; i++){
