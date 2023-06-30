@@ -35,6 +35,21 @@ var img_dir = ['img/sceneWheel_images_webp/Wheel01/wheel01_r02',
 'img/sceneWheel_images_webp/Wheel05/wheel05_r02']
 var preload_images = [[recon_images]];
 
+
+var subj_idx = {
+  type: jsPsychSurveyHtmlForm,
+  preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
+  html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
+  button_label: "继续",
+  on_finish: function (data) {   
+      
+      var idx = parseFloat(data.response.subj_idx)%2
+      data.order = idx
+      //console.log(idx)
+  }
+};
+
+console.log(jsPsych.data.get().filter({type: 'survey-html-form'}).select('order').values)
 var example_cue = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: jsPsych.timelineVariable('cue'),
@@ -144,6 +159,6 @@ var example_proc = {
 
 /*set up experiment structure*/
 var timeline = [];
-timeline.push(example_proc);
+timeline.push(subj_idx,example_proc);
 
 jsPsych.run(timeline);

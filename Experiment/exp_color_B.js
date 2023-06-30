@@ -139,7 +139,7 @@ timeline.push(subj_education);
 
 
 
-var keys=['ArrowLeft','ArrowRight'];
+var keys=['ArrowRight','ArrowLeft'];
 
 
 
@@ -159,7 +159,7 @@ timeline.push(intro2);
 
 var intro3 = {
   type: jsPsychImageKeyboardResponse,
-  stimulus: dir+'intro3_1.png',
+  stimulus: dir+'intro3_2.png',
   choices: "ALL_KEYS",
 };
 timeline.push(intro3);
