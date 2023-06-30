@@ -22,6 +22,10 @@ var subj_idx = {
   preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
   html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
   button_label: "继续",
+  on_finish: function (data) {   
+    var idx = parseFloat(data.response.subj_idx)%2;
+    data.order = idx;
+}
 };
 
 
@@ -62,7 +66,7 @@ var subj_education = {
   button_label: "继续",
 }
 
-var keys = ['f','j'];
+var keys = [keys[0],keys[1]];
 var recon_images = [];
 
 for (i = 0; i <360; i++){
@@ -73,7 +77,7 @@ for (i = 0; i <360; i++){
 
 recon_images.push(dir+'intro1.png');
 recon_images.push(dir+'intro2.png');
-recon_images.push(dir+'intro3.png');
+recon_images.push(dir+'intro31.png');
 recon_images.push(dir+'intro4.png');
 recon_images.push(dir+'intro5.png');
 recon_images.push(dir+'intro6.png');
@@ -119,10 +123,14 @@ var instructions = {
  }
 };
 
+
+
+var keys=['ArrowLeft','ArrowRight'];
+
 var intro_variables = [
   {stimulus: dir+'intro1.png'},
   {stimulus: dir+'intro2.png'},
-  {stimulus: dir+'intro3.png'},
+  {stimulus: dir+'intro31.png'},
   {stimulus: dir+'intro4.png'},
   {stimulus: dir+'intro5.png'},
   {stimulus: dir+'intro6.png'},
@@ -209,9 +217,9 @@ var example_target = {
     },
     on_finish: function(data) {
       var correct = false;
-      if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+      if (jsPsych.pluginAPI.compareKeys(data.response, keys[0]) && data.condition == 1) {
           correct = true;
-      } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+      } else if (jsPsych.pluginAPI.compareKeys(data.response, keys[1]) && data.condition == 0) {
           correct = true;
       }
       data.correct = correct;
@@ -234,7 +242,7 @@ var example_recon = {
 var confirmation = {
   type: jsPsychImageKeyboardResponse,
   stimulus: dir+'example2.png',
-  choices: ['f', 'j'],
+  choices: [keys[0], keys[1]],
   data: {type: 'example_confirmation'},
 };
 
@@ -282,7 +290,7 @@ var example_proc = {
   loop_function: function(data){
       var key_response = data.filter({type: 'example_confirmation'}).values()[0].response;
       //console.log(key_response)
-      if (jsPsych.pluginAPI.compareKeys(key_response, 'j')) {
+      if (jsPsych.pluginAPI.compareKeys(key_response, keys[1])) {
           return true;
       }else{
           return false;
@@ -357,9 +365,9 @@ var prac_target = {
   //prompt:'</br>按任意键继续',
   on_finish: function(data) {
     var correct = false;
-    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+    if (jsPsych.pluginAPI.compareKeys(data.response, keys[0]) && data.condition == 1) {
         correct = true;
-    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, keys[1]) && data.condition == 0) {
         correct = true;
     }
     data.correct = correct;
@@ -522,9 +530,9 @@ var test1_target = {
   //prompt:'</br>按任意键继续',
   on_finish: function(data) {
     var correct = false;
-    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+    if (jsPsych.pluginAPI.compareKeys(data.response, keys[0]) && data.condition == 1) {
         correct = true;
-    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, keys[1]) && data.condition == 0) {
         correct = true;
     }
     data.correct = correct;
@@ -706,9 +714,9 @@ var test2_target = {
   //prompt:'</br>按任意键继续',
   on_finish: function(data) {
     var correct = false;
-    if (jsPsych.pluginAPI.compareKeys(data.response, 'f') && data.condition == 1) {
+    if (jsPsych.pluginAPI.compareKeys(data.response, keys[0]) && data.condition == 1) {
         correct = true;
-    } else if (jsPsych.pluginAPI.compareKeys(data.response, 'j') && data.condition == 0) {
+    } else if (jsPsych.pluginAPI.compareKeys(data.response, keys[1]) && data.condition == 0) {
         correct = true;
     }
     data.correct = correct;
