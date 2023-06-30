@@ -172,9 +172,9 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
           this.draw_pointer(pcx+rel_cx, pcy+rel_cy, this.params.indicator_pointer_radius, 'black');
         }      
       }
+      
       setup_event_listeners(){
-        document.addEventListener("keydown", this.search_event);
-        document.addEventListener("keydown", this.search_confirm_event);      
+        document.addEventListener("keydown", this.search_event);     
       }
       
       search_event(e){
@@ -183,7 +183,9 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         this.is_search=true;
         
         this.angles = this.find_param(e);
-        this.init_display(this.angles.img_angle, this.angles.rotated_angle+this.wsp);  
+        this.init_display(this.angles.img_angle, this.angles.rotated_angle+this.wsp); 
+        document.addEventListener("keydown", this.search_confirm_event); 
+        
         }
       }
       search_confirm_event(e){
@@ -195,10 +197,10 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
           var rect = this.recon_arena.getBoundingClientRect();
           var rel_cx = (rect.width/2)-this.params.indicator_wheel_width; //relative canvas center
           var rel_cy = (rect.height/2)-this.params.indicator_wheel_width;     
-          var pcx = Math.cos(this.angles.mouse_angle) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius); // pointer center
-          var pcy = Math.sin(this.angles.mouse_angle) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius);        
+          var pcx = Math.cos(this.angles.rotated_angle+this.wsp) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius); // pointer center
+          var pcy = Math.sin(this.angles.rotated_angle+this.wsp) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius);        
           this.draw_pointer(pcx+rel_cx, pcy+rel_cy, this.params.indicator_pointer_radius, 'gray');
-    
+
       }
         // record data
         this.trial_data={};
@@ -206,7 +208,7 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         this.trial_data.response = this.img_num;
         this.trial_data.img_angle = this.angles.img_angle;
         this.trial_data.color = this.color;
-        this.trial_data.mouse_angle = this.angles.mouse_angle;
+        //this.trial_data.mouse_angle = this.angles.mouse_angle;
         this.trial.randrot_angle = this.wsp; 
         this.is_search = false;      
         // call uncertainty rating functions
@@ -224,37 +226,43 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
             document.removeEventListener("keydown", this.search_confirm_event);
             // canvas info        
             var rect = this.recon_arena.getBoundingClientRect();     
-            var canvas_centerX = rect.left + (rect.width/2) - this.params.indicator_wheel_width;
-            var canvas_centerY = rect.top + (rect.height/2) - this.params.indicator_wheel_width;             
+            //var canvas_centerX = rect.left + (rect.width/2) - this.params.indicator_wheel_width;
+            //var canvas_centerY = rect.top + (rect.height/2) - this.params.indicator_wheel_width;             
             // get relative mouseposition in rect
             //var x = e.clientX-canvas_centerX;
             //var y = e.clientY-canvas_centerY;
             //var end_angle = Math.atan2(y, x);         
             
             this.end_angle = this.find_end(e); 
-    
-    
+
+
             var draw_range=(start, one_end) => {
               var rad = this.params.indicator_wheel_diameter/2-4;          
               var ctx = this.recon_arena.getContext("2d");
               var start = (start+Math.PI) % (Math.PI*2) - Math.PI;
               var one_end = (one_end+Math.PI) % (Math.PI*2) - Math.PI;
-              this.half_range = Math.abs((one_end - start+Math.PI) % (Math.PI*2) - Math.PI);
-              console.log(this.half_range);
-              console.log(start);
-              console.log(one_end);
-    
+              this.half_range = Math.abs((one_end+Math.PI) % (Math.PI*2) - Math.PI);
+              //this.half_range = one_end;
+
+              //console.log(this.angles.rotated_angle+this.wsp);
+              //console.log(one_end);
+              //console.log(this.half_range);
+              //console.log(start);
+
               ctx.clearRect(0, 0, this.params.indicator_wheel_diameter, this.params.indicator_wheel_diameter);            
               ctx.beginPath();
               ctx.lineWidth = 5;
               ctx.strokeStyle = 'gray';
-              ctx.arc(rect.width/2-this.params.indicator_wheel_width, rect.height/2-this.params.indicator_wheel_width, rad, 
-                start-this.half_range, start+this.half_range);
+              ctx.arc(rect.width/2-this.params.indicator_wheel_width, 
+                      rect.height/2-this.params.indicator_wheel_width, 
+                      rad,
+                      start-this.half_range, 
+                      start+this.half_range);
               ctx.stroke();
               ctx.closePath();          
             }        
             
-            draw_range(this.angles.mouse_angle, this.end_angle);        
+            draw_range(this.angles.rotated_angle+this.wsp, this.end_angle);        
           }
       }
     }
@@ -264,23 +272,25 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         }else if (e.keyCode==39){
           var end_angle = (Math.PI*2)/360
         }
-    
+
         if(this.range_count==0){
           var end_range = 0
         }else{
           var end_range = this.end_angle
         }
-        console.log(this.range_count);
-        this.range_count = this.range_count + 1;
+
+
         var end_range = end_angle+ end_range;
+        this.range_count = this.range_count + 1;
         return end_range;
       }
-    
+
       range_confirm_event(e){
         if(e.keyCode==32){
           if(this.is_search == false){
               document.removeEventListener("keydown", this.range_event);            
               this.trial_data.uncertainty_half_range = this.half_range; 
+              this.trial_data.uncertainty_half_range_image =  Math.floor((this.half_range / Math.PI)*180); 
               this.trial_data.uncertainty_rt = performance.now() - this.search_end; // need to figure out        
               this.end_trial();            
           } 
@@ -313,13 +323,16 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         angles.rotated_angle_wrap = (angles.rotated_angle + (Math.PI*2)) % (Math.PI*2) // range: 0 ~ 2*pi
         angles.rotated_angle_deg = angles.rotated_angle_wrap/Math.PI * 180; 
         angles.img_angle = Math.floor(angles.rotated_angle_deg/this.params.step_size);  
+        if(angles.img_angle<0){
+          angles.img_angle = 360 + angles.img_angle
+        }
         //console.log(angles);
         this.count = this.count + 1;
-       // console.log(angles.mouse_angle);
+        //console.log(angles.mouse_angle);
         //console.log(angles.rotated_angle)
         //console.log(angles.img_angle)
-    
-    
+
+
         return angles;
       }
       draw_pointer(xx, yy, radius, color){
@@ -332,10 +345,10 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         ctx.closePath();
       }
       end_trial(){
-        document.removeEventListener("click", this.search_confirm_event);
-        document.removeEventListener("mousemove", this.search_event);
-        document.removeEventListener("mousemove", this.range_event);
-        document.removeEventListener("click", this.range_confirm_event);
+        document.removeEventListener("keydown", this.search_confirm_event);
+        document.removeEventListener("keydown", this.search_event);
+        document.removeEventListener("keydown", this.range_event);
+        document.removeEventListener("keydown", this.range_confirm_event);
         this.display.innerHTML = "";
         document.querySelector("#recon-wheel-styles").remove();
         this.jsPsych.finishTrial(this.trial_data);

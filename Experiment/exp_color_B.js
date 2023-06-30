@@ -159,7 +159,7 @@ timeline.push(intro2);
 
 var intro3 = {
   type: jsPsychImageKeyboardResponse,
-  stimulus: dir+'intro3_2.png',
+  stimulus: dir+'intro32.png',
   choices: "ALL_KEYS",
 };
 timeline.push(intro3);
