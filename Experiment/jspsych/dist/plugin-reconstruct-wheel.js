@@ -173,19 +173,20 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         }      
       }
       
+
       setup_event_listeners(){
         document.addEventListener("keydown", this.search_event);     
       }
       
       search_event(e){
-        if(e.keyCode==37||e.keyCode==39){
+        if(e.keyCode==37||e.keyCode==39||e.keyCode==38||e.keyCode==40){
         //if(e.keyCode==32){
         this.is_search=true;
         
         this.angles = this.find_param(e);
         this.init_display(this.angles.img_angle, this.angles.rotated_angle+this.wsp); 
         document.addEventListener("keydown", this.search_confirm_event); 
-        
+         
         }
       }
       search_confirm_event(e){
@@ -200,7 +201,7 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
           var pcx = Math.cos(this.angles.rotated_angle+this.wsp) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius); // pointer center
           var pcy = Math.sin(this.angles.rotated_angle+this.wsp) * (this.params.indicator_wheel_diameter/2-this.params.indicator_pointer_radius);        
           this.draw_pointer(pcx+rel_cx, pcy+rel_cy, this.params.indicator_pointer_radius, 'gray');
-
+    
       }
         // record data
         this.trial_data={};
@@ -221,7 +222,7 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
       }
     }
       range_event(e){
-        if(e.keyCode==37||e.keyCode==39){
+        if(e.keyCode==37||e.keyCode==39||e.keyCode==38||e.keyCode==40){
           if(this.is_search == false){              
             document.removeEventListener("keydown", this.search_confirm_event);
             // canvas info        
@@ -234,8 +235,8 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
             //var end_angle = Math.atan2(y, x);         
             
             this.end_angle = this.find_end(e); 
-
-
+    
+    
             var draw_range=(start, one_end) => {
               var rad = this.params.indicator_wheel_diameter/2-4;          
               var ctx = this.recon_arena.getContext("2d");
@@ -243,12 +244,12 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
               var one_end = (one_end+Math.PI) % (Math.PI*2) - Math.PI;
               this.half_range = Math.abs((one_end+Math.PI) % (Math.PI*2) - Math.PI);
               //this.half_range = one_end;
-
+    
               //console.log(this.angles.rotated_angle+this.wsp);
               //console.log(one_end);
               //console.log(this.half_range);
               //console.log(start);
-
+    
               ctx.clearRect(0, 0, this.params.indicator_wheel_diameter, this.params.indicator_wheel_diameter);            
               ctx.beginPath();
               ctx.lineWidth = 5;
@@ -271,20 +272,25 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
           var end_angle = -(Math.PI*2)/360
         }else if (e.keyCode==39){
           var end_angle = (Math.PI*2)/360
+        }else if (e.keyCode==38){
+          var end_angle = -(Math.PI*2)/360*5
+        }else if (e.keyCode==40){
+          var end_angle = (Math.PI*2)/360*5
         }
-
+  
+    
         if(this.range_count==0){
           var end_range = 0
         }else{
           var end_range = this.end_angle
-        }
-
-
+        };
+    
+    
         var end_range = end_angle+ end_range;
         this.range_count = this.range_count + 1;
         return end_range;
-      }
-
+      };
+    
       range_confirm_event(e){
         if(e.keyCode==32){
           if(this.is_search == false){
@@ -312,6 +318,10 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
           angles.mouse_angle = -(Math.PI*2)/360;
         }else if (e.keyCode==39){
           angles.mouse_angle = (Math.PI*2)/360;
+        }else if (e.keyCode==38){
+          angles.mouse_angle = -(Math.PI*2)/360*5;
+        }else if (e.keyCode==40){
+          angles.mouse_angle = (Math.PI*2)/360*5;
         }; 
         // range: -pi to pi
         if (this.count == 0){
@@ -331,8 +341,8 @@ var jsPsychReconstruct_wheel = (function (jspsych) {
         //console.log(angles.mouse_angle);
         //console.log(angles.rotated_angle)
         //console.log(angles.img_angle)
-
-
+    
+    
         return angles;
       }
       draw_pointer(xx, yy, radius, color){

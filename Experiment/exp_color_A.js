@@ -147,6 +147,9 @@ var intro1 = {
   type: jsPsychImageKeyboardResponse,
   stimulus: dir+'intro1.png',
   choices: "ALL_KEYS",
+  on_finish: function () {
+    $("body").css("cursor", "none");
+ }
 };
 timeline.push(intro1);
 
@@ -336,7 +339,7 @@ var example_proc = {
   loop_function: function(data){
       var key_response = data.filter({type: 'example_confirmation'}).values()[0].response;
       //console.log(key_response)
-      if (jsPsych.pluginAPI.compareKeys(key_response, keys[1])) {
+      if (jsPsych.pluginAPI.compareKeys(key_response, keys[0])) {
           return true;
       }else{
           return false;

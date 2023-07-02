@@ -147,6 +147,9 @@ var intro1 = {
   type: jsPsychImageKeyboardResponse,
   stimulus: dir+'intro1.png',
   choices: "ALL_KEYS",
+  on_finish: function () {
+    $("body").css("cursor", "none");
+ }
 };
 timeline.push(intro1);
 

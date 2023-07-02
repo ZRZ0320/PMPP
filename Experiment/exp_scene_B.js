@@ -189,7 +189,7 @@ var example_target = {
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d{3}(?=\.webp$)/));
-    if (jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
+    if (jsPsych.timelineVariable('cue') == dir+'dinningroom.png'){
       if (num < 60 | num >= 300){
         var condition = 1;
       }else{
@@ -334,7 +334,7 @@ var prac_target = {
   'condition': function(){
     var str = jsPsych.timelineVariable('target');
     var num = parseInt(str.match(/\d{3}(?=\.webp$)/));
-    if (jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
+    if (jsPsych.timelineVariable('cue') == dir+'dinningroom.png'){
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 60 | num >= 300){
         var condition = 1;
@@ -498,7 +498,7 @@ var test1_target = {
     //console.log(jsPsych.timelineVariable('target'));
     //console.log(jsPsych.timelineVariable('cue'));    
     //console.log(num);
-    if (jsPsych.timelineVariable('cue') == 'bedroom'){
+    if (jsPsych.timelineVariable('cue') ==  dir+'dinningroom.png'){
       //console.log(jsPsych.timelineVariable('cue') == dir+'bedroom.png');
       if (num < 60 | num >= 300){
         var condition = 1;
@@ -684,7 +684,7 @@ var test2_target = {
     //console.log(jsPsych.timelineVariable('target'));
     //console.log(jsPsych.timelineVariable('cue'));    
     //console.log(num);
-    if (jsPsych.timelineVariable('cue') == dir+'bedroom.png'){
+    if (jsPsych.timelineVariable('cue') == dir+'dinningroom.png'){
       //console.log(jsPsych.timelineVariable('cue') == 'bedroom');
       if (num < 60 | num >= 300){
         var condition = 1;

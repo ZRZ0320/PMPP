@@ -304,7 +304,7 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
   }
   
   search_event(e){
-    if(e.keyCode==37||e.keyCode==39){
+    if(e.keyCode==37||e.keyCode==39||e.keyCode==38||e.keyCode==40){
     //if(e.keyCode==32){
     this.is_search=true;
     
@@ -347,7 +347,7 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
   }
 }
   range_event(e){
-    if(e.keyCode==37||e.keyCode==39){
+    if(e.keyCode==37||e.keyCode==39||e.keyCode==38||e.keyCode==40){
       if(this.is_search == false){              
         document.removeEventListener("keydown", this.search_confirm_event);
         // canvas info        
@@ -397,6 +397,10 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
       var end_angle = -(Math.PI*2)/360
     }else if (e.keyCode==39){
       var end_angle = (Math.PI*2)/360
+    }else if (e.keyCode==38){
+      var end_angle = -(Math.PI*2)/360*5
+    }else if (e.keyCode==40){
+      var end_angle = (Math.PI*2)/360*5
     }
 
     if(this.range_count==0){
@@ -438,6 +442,10 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
       angles.mouse_angle = -(Math.PI*2)/360;
     }else if (e.keyCode==39){
       angles.mouse_angle = (Math.PI*2)/360;
+    }else if (e.keyCode==38){
+      angles.mouse_angle = -(Math.PI*2)/360*5;
+    }else if (e.keyCode==40){
+      angles.mouse_angle = (Math.PI*2)/360*5;
     }; 
     // range: -pi to pi
     if (this.count == 0){
