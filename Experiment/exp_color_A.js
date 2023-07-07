@@ -609,7 +609,7 @@ var test1_target = {
         var condition = 0;
       }
     }
-    console.log(condition);
+    //console.log(condition);
     return condition;
   }
     
