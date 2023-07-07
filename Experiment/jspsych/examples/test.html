@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../dist/jspsych.js"></script>
+    <script src="../dist/plugin-html-keyboard-response.js"></script>
+    <link rel="stylesheet" href="../dist/jspsych.css">
+  </head>
+  <body></body>
+  <script>
+
+    var jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.get().localSave('csv', 'test.csv');
+      },
+      default_iti: 250
+    });
+    var test = 444;
+    var test2 = 555;
+    var timeline_variables = [
+      { v1: "<p>1</p>" , v2: "<p>1</p>", v3: 1},
+      { v1: "<p>2</p>" , v2: "<p>2</p>", v3: 1},
+      { v1: "<p>3</p>" , v2: "<p>3</p>", v3: 3},
+      { v1: "<p>6</p>" , v2: "<p>6</p>", v3: 3}
+    ];
+    console.log([timeline_variables[0]]);
+    //console.log(jsPsych.data.get().values());
+    var node = {
+      timeline_variables: timeline_variables,
+      timeline: [
+        {
+          type: jsPsychHtmlKeyboardResponse,
+          choices: "ALL_KEYS",
+          stimulus: jsPsych.timelineVariable('v1'),
+          data: {type: 'v1',
+            correct: jsPsych.timelineVariable('v3'),}
+        },
+        /*
+        {
+          type: jsPsychHtmlKeyboardResponse,
+          choices: "ALL_KEYS",
+          stimulus: jsPsych.timelineVariable('v2'),
+          data: {type: 'v2',
+            correct: jsPsych.timelineVariable('v3'),}
+        }
+        */
+      ],
+      repetitions: 2,
+      on_finish: function(){
+        console.log(jsPsych.data.get().filter({type: 'v1',correct:1}).select('trial_index').values);
+        var index = jsPsych.data.get().filter({type: 'v1',correct:1}).select('trial_index').values;
+        for (var i = 0; i < index.length; i++) {
+          console.log(jsPsych.data.get().filter({trial_index: index[i]}));
+          var x = jsPsych.data.get().filter({trial_index: index[i]});
+          console.log(x);
+          //console.log(...[timeline_variables[x]].map(item => item.v1));
+        }
+        jsPsych.addNodeToEndOfTimeline({
+          timeline: [{
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: "<p>4ddddd</p>",
+            stimulus_width: 300,
+          }]
+        });
+      }
+    };
+
+    jsPsych.run([node]);
+
+  </script>
+</html>

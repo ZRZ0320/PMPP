@@ -2,7 +2,7 @@ var jsPsych = initJsPsych({
   show_progress_bar: true,
   on_finish: function() {
       //jsPsych.data.displayData();
-      jsPsych.data.get().localSave('csv', 'test.csv');
+      jsPsych.data.get().localSave('csv',  `test_${id}.csv`);
       document.exitFullscreen();
     }
   }
@@ -23,8 +23,9 @@ var subj_idx = {
   html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
   button_label: "继续",
   on_finish: function (data) {   
-    var idx = parseFloat(data.response.subj_idx)%2;
+    idx = parseFloat(data.response.subj_idx)%2+1;
     data.order = idx;
+    id = data.response.subj_idx;
 }
 };
 
@@ -115,6 +116,15 @@ var preload = {
   auto_preload: true
 };
 
+
+/*set up experiment structure*/
+var timeline = [];
+//
+timeline.push(fullscreen_trial);
+timeline.push(preload);
+
+
+
 /*set up intro block*/
 var instructions = {
   type: jsPsychImageKeyboardResponse,
@@ -125,29 +135,63 @@ var instructions = {
  }
 };
 
+//
+timeline.push(basic_information);
+timeline.push(subj_idx);
+timeline.push(subj_age);
+timeline.push(subj_sex);
+timeline.push(subj_education);
 
 
-
-var intro_variables = [
-  {stimulus: dir+'intro1.png'},
-  {stimulus: dir+'intro2.png'},
-  {stimulus: dir+'intro31.png'},
-  {stimulus: dir+'intro4.png'},
-  {stimulus: dir+'intro5.png'},
-  {stimulus: dir+'intro6.png'},
-  
-];
-
-
-var intimeline = [
-  instructions
-];
-
-var into_proc = {
-  timeline: intimeline,
-  timeline_variables: intro_variables,
-  randomize_order:false,
+var intro1 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'intro1.png',
+  choices: "ALL_KEYS",
+  on_finish: function () {
+    $("body").css("cursor", "none");
+ }
 };
+timeline.push(intro1);
+
+var intro2 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'intro2.png',
+  choices: "ALL_KEYS",
+};
+timeline.push(intro2);
+
+var intro3 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: function () {
+    return dir+'intro3'+idx+'.png';
+  },
+  choices: "ALL_KEYS",
+};
+timeline.push(intro3);
+
+var intro4 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'intro4.png',
+  choices: "ALL_KEYS",
+};
+timeline.push(intro4);
+
+var intro5 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'intro5.png',
+  choices: "ALL_KEYS",
+};
+timeline.push(intro5);
+
+var intro6 = {
+  type: jsPsychImageKeyboardResponse,
+  stimulus: dir+'intro6.png',
+  choices: "ALL_KEYS",
+};
+timeline.push(intro6);
+
+
+
 
 
 /*set up example block*/
@@ -446,7 +490,7 @@ var prac_proc = {
   loop_function: function(data){
       var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
       var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-     if (accuracy < 60) {
+     if (accuracy < 90) {
           return true;
     } else {
           return false;
@@ -846,19 +890,8 @@ var end ={
 
 
 
-/*set up experiment structure*/
-var timeline = [];
-//
-timeline.push(fullscreen_trial);
-timeline.push(preload);
-//
-timeline.push(basic_information);
-timeline.push(subj_idx);
-timeline.push(subj_age);
-timeline.push(subj_sex);
-timeline.push(subj_education);
-//
-timeline.push(into_proc);
+
+
 timeline.push(example_instruction1);
 timeline.push(example_proc);
 //

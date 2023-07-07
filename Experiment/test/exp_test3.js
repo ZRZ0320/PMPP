@@ -99,6 +99,8 @@ var example_recon = {
     type: jsPsychReconstruct_colorwheel,
     uncertainty_range: true,
     random_circle_rotation: true,
+    show_answer: true,
+    answer_image: jsPsych.timelineVariable('target'),
     data: {type: 'recon'},
 };
 

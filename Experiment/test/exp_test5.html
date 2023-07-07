@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="../jspsych/dist/jspsych.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="../jspsych/dist/plugin-survey-text.js"></script>
+  <script src="../jspsych/dist/plugin-survey-html-form.js"></script>  
+  <script src="../jspsych/dist/plugin-survey-multi-choice.js"></script> 
+  <script src="../jspsych/dist/plugin-survey-likert.js"></script>   
+  <script src="../jspsych/dist/plugin-fullscreen.js"></script>
+  <script src="../jspsych/dist/plugin-instructions.js"></script>
+  <script src="../jspsych/dist/plugin-image-keyboard-response.js"></script>
+  <script src="../jspsych/dist/plugin-reconstruct-wheel.js"></script>
+  <script src="../jspsych/dist/plugin-html-button-response.js"></script>
+  <script src="../jspsych/dist/plugin-html-keyboard-response.js"></script>
+  <script src="../jspsych/dist/plugin-preload.js"></script>
+  <link rel="stylesheet" href="../jspsych/dist/jspsych.css">
+</head>
+<body></body>
+<script>
+  
+
+  var jsPsych = initJsPsych({
+      show_progress_bar: true,
+      on_finish: function() {
+          //jsPsych.data.displayData();
+          jsPsych.data.get().localSave('csv', `test_${id}.csv`);
+        }
+      }
+    );
+
+  var subj_idx = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
+      html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
+      button_label: "继续",
+      on_finish: function (data) {   
+        idx = parseFloat(data.response.subj_idx)%2;
+        data.order = idx;
+        id = data.response.subj_idx;
+      }
+    };
+   
+  var subj_idx_2 = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 30px; font-family: SimSun;"> 你的被试编号是?</b> </p>',
+      html: '<p style="font-size: 40px; font-family: SimSun;"> <input style="font-size: 20px; font-family: SimSun;" name="subj_idx" type="text" value="000" required>.</p>',
+      button_label: "继续",
+      on_finish: function (data) {   
+        idx = parseFloat(data.response.subj_idx)%2;
+        data.order = idx;
+        console.log(idx);
+      }
+    };
+
+  var prac_feedback = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: function() {
+      return "<p style='font-size: 30px; font-family: SimSun;'>你当前的正确率为 <strong>"+idx+"%</strong></p> " +
+      "<p style='font-size: 30px; font-family: SimSun;'>按任意键结束</p>";},
+  };  
+
+  var prac_feedback_2 = {
+    type: jsPsychImageKeyboardResponse,
+    stimulus:  function() {
+      var idxx=Math.floor(idx)+1
+      return '../img/instructions_color/intro3'+idxx+'.png'
+    },
+  }
+  
+
+  
+  timeline=[subj_idx,prac_feedback,prac_feedback_2];
+  jsPsych.run(timeline);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>plugin

@@ -1,0 +1,275 @@
+```{r}
+library(pacman)
+p_load('tidyverse','bruceR')
+```
+
+# color1
+
+```{r}
+df_raw <- list.files(file.path("../Data"), pattern = "color_test_.*\\.csv$") %>%
+  # 对读取到的所有.out文件x都执行函数read.table
+  lapply(function(x) read.csv(file.path("../Data", x), header = TRUE)) %>%
+    # 读取被试人口学信息
+  lapply(function(df) mutate(df,subj_idx = as.numeric(jsonlite::fromJSON(response[4])$subj_idx), 
+          Born = jsonlite::fromJSON(response[5])$Born,
+          year = jsonlite::fromJSON(response[6])$sex,
+          education = jsonlite::fromJSON(response[7])$education)%>%
+           select(-success,-timeout))%>%
+  bind_rows()
+```
+
+```{r}
+df.target<-df_raw%>%
+  filter(type=='test1_target')%>%
+  mutate(subj_idx = as.factor(subj_idx),
+        rt=as.numeric(rt),
+         condition=as.factor(condition),
+         correct=as.factor(correct),
+         cue =as.factor(str_extract(cue, "(?<=color/).*?(?=\\.png)")),
+         target = as.numeric(str_extract(target, "(?<=color_).*?(?=\\.png)")))%>%
+  select(rt,
+         correct,
+         condition,
+         cue,
+         target)%>%
+  mutate(correct = case_when(correct=='true'~1,
+                         correct=='TRUE'~1,
+                         TRUE ~ 0),,
+         condition = ifelse(condition == 1, 'congruent', 'incongruent'))
+df.rec<-df_raw%>%
+  filter(type=='test1_recon')%>%
+  mutate(image=as.numeric(img_angle),
+         range=as.numeric(uncertainty_half_range),
+         range_image=as.numeric(uncertainty_half_range_image))%>%
+  select(image,
+         range,
+         range_image)
+df <- cbind(df.target, df.rec)%>%
+  filter(correct==1)%>%
+  mutate(error=target-image,
+         error=case_when(error>=180~180-(error-180),
+                         error<=-180~-180-(error+180),
+                         TRUE ~ error),
+         abs_error = abs(error))
+```
+
+
+```{r}
+ggplot(df,
+       aes(x=rt,
+       color=condition,
+      ))+
+  geom_histogram(aes(y = ..density..,
+                      fill=condition), 
+                 
+                 position = "identity",
+                 alpha=0.5) +
+  geom_density() +
+  labs(x = "rt", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(df,
+       aes(x=error,
+       color=condition))+
+  geom_histogram(aes(y = ..density..,
+                     fill=condition), 
+                 
+                 position = "identity",
+                 alpha=0.5,
+                 bins=15) +
+  geom_density() +
+  labs(x = "error", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(df,
+       aes(x=range_image,
+       color=condition))+
+  geom_histogram(aes(y = ..density..,
+                     fill=condition), 
+                 
+                 position = "identity",
+                 alpha=0.5,
+                 bins=15) +
+  geom_density() +
+  labs(x = "error", y = "Density") +
+  theme_minimal()
+
+```
+
+```{r}
+bruceR::Corr(df)
+
+```
+
+```{r}
+ggplot(df,
+       aes(x=range_image,
+       y=abs_error))+
+  geom_point()+
+  theme_minimal()
+```
+
+
+
+
+
+# color2
+```{r}
+df.target<-read.csv('../Data/color_test_2.csv')%>%
+  filter(type=='test1_target')%>%
+  mutate(rt=as.numeric(rt),
+         condition=as.factor(condition),
+         correct=as.factor(correct),
+         cue =as.factor(str_extract(cue, "(?<=color/).*?(?=\\.png)")),
+         target = as.numeric(str_extract(target, "(?<=color_).*?(?=\\.png)")))%>%
+  select(rt,
+         correct,
+         condition,
+         cue,
+         target)%>%
+  mutate(correct = ifelse(correct == "true", 1, 0),
+         condition = ifelse(condition == 1, 'congruent', 'incongruent'))
+df.rec<-read.csv('../Data/color_test_2.csv')%>%
+  filter(type=='test1_recon')%>%
+  mutate(image=as.numeric(img_angle),
+         range=as.numeric(uncertainty_half_range),
+         range_image=as.numeric(uncertainty_half_range_image))%>%
+  select(image,
+         range,
+         range_image)
+df <- cbind(df.target, df.rec)%>%
+  filter(correct==1)%>%
+  mutate(error=target-image,
+         error=case_when(error>=180~180-(error-180),
+                         error<=-180~-180-(error+180),
+                         TRUE ~ error),
+         abs_error = abs(error))
+
+```
+
+
+```{r}
+ggplot(df,
+       aes(x=rt,
+       color=condition,
+      ))+
+  geom_histogram(aes(y = ..density..,
+                      fill=condition), 
+                 bins=15,
+                 position = "identity",
+                 alpha=0.5) +
+  geom_density() +
+  labs(x = "rt", y = "Density") +
+  theme_minimal()
+```
+```{r}
+ggplot(df,
+       aes(x=error,
+       color=condition))+
+  geom_histogram(aes(y = ..density..,
+                     fill=condition), 
+                 
+                 position = "identity",
+                 alpha=0.5,
+                 bins=15) +
+  geom_density() +
+  labs(x = "error", y = "Density") +
+  theme_minimal()
+```
+```{r}
+bruceR::Corr(df)
+```
+
+
+```{r}
+ggplot(df,
+       aes(x=range_image,
+       y=abs(error)))+
+  geom_point()+
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+# scene1
+```{r}
+df.target<-read.csv('../Data/scene_test_1.csv')%>%
+  filter(type=='test1_target')%>%
+  mutate(rt=as.numeric(rt),
+         condition=as.factor(condition),
+         correct=as.factor(correct),
+         cue =as.factor(str_extract(cue, "(?<=_scene/).*?(?=\\.png)")),
+         target = as.numeric(str_extract(target, "(?<=r32/).*?(?=\\.webp)")))%>%
+  select(rt,
+         correct,
+         condition,
+         cue,
+         target)%>%
+  mutate(correct = ifelse(correct == "true", 1, 0),
+         condition = ifelse(condition == 1, 'congruent', 'incongruent'))
+df.rec<-read.csv('../Data/scene_test_1.csv')%>%
+  filter(type=='test1_recon')%>%
+  mutate(image=as.numeric(img_angle),
+         range=as.numeric(uncertainty_half_range),
+         range_image=as.numeric(uncertainty_half_range_image))%>%
+  select(image,
+         range,
+         range_image)
+df <- cbind(df.target, df.rec)%>%
+  filter(correct==1)%>%
+  mutate(error=target-image,
+         error=case_when(error>=180~180-(error-180),
+                         error<=-180~-180-(error+180),
+                         TRUE ~ error),
+         abs_error = abs(error))
+
+```
+
+
+```{r}
+ggplot(df,
+       aes(x=rt,
+       color=condition,
+      ))+
+  geom_histogram(aes(y = ..density..,
+                      fill=condition), 
+                 bins = 15,
+                 position = "identity",
+                 alpha=0.5) +
+  geom_density() +
+  labs(x = "rt", y = "Density") +
+  theme_minimal()
+```
+```{r}
+ggplot(df,
+       aes(x=error,
+       color=condition))+
+  geom_histogram(aes(y = ..density..,
+                     fill=condition), 
+                 position = "identity",
+                 alpha=0.5,
+                 bins=15) +
+  geom_density() +
+  labs(x = "error", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+Corr(df)
+```
+```{r}
+ggplot(df,
+       aes(x=range_image,
+       y=abs(error)))+
+  geom_point()+
+  theme_minimal()
+```
