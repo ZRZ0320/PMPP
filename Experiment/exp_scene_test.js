@@ -478,21 +478,7 @@ var prac_iti = {
 
 
 var prac_variables = [
-  //
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
+   {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
 ];
 
 
@@ -632,18 +618,6 @@ var test1_iti = {
 
 var test1_variables = [
   {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //
 
 ];
 
@@ -785,17 +759,6 @@ var test2_iti = {
 
 var test2_variables = [
   {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
 
 ];
 
@@ -940,17 +903,6 @@ var test3_iti = {
 
 var test3_variables = [
   {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
 
 ];
 
@@ -1095,17 +1047,6 @@ var test4_iti = {
 
 var test4_variables = [
   {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
 
 ];
 
@@ -1256,18 +1197,6 @@ var test5_iti = {
 
 var test5_variables = [
   {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),0,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),120,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'bedroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'dinningroom.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  {cue:dir+'restaurant.png',target: 'img/sceneWheel_images_webp/Wheel04/wheel04_r32/'+('000000'+uniformwidth(Math.random(),240,30)).slice(-6).toString()+'.webp',tdtime:Math.floor(Math.random() * 500) + 1000},
-  //
 
 ];
 
@@ -1323,20 +1252,13 @@ timeline.push(prac_feedback_test5);
 /*set the end slide*/
 var end ={
   type: jsPsychImageKeyboardResponse,
-  stimulus: dir+'test3.png',
+  stimulus: dir+'end.png',
   choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "default");
   }
 
 };
-
-
-
-
-
-
-
 
 
 

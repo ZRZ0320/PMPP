@@ -37,9 +37,12 @@ recon_images.push(dir+'blue.png');
 recon_images.push(dir+'green.png');
 recon_images.push(dir+'prac1.png');
 recon_images.push(dir+'prac2.png');
+recon_images.push(dir+'test0.png');
 recon_images.push(dir+'test1.png');
 recon_images.push(dir+'test2.png');
 recon_images.push(dir+'test3.png');
+recon_images.push(dir+'test4.png');
+recon_images.push(dir+'end.png');
 
 
 
@@ -1530,7 +1533,7 @@ timeline.push(prac_feedback_test5);
 /*set the end slide*/
 var end ={
   type: jsPsychImageKeyboardResponse,
-  stimulus: dir+'test3.png',
+  stimulus: dir+'end.png',
   choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "default");

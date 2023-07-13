@@ -1516,7 +1516,7 @@ timeline.push(prac_feedback_test5);
 /*set the end slide*/
 var end ={
   type: jsPsychImageKeyboardResponse,
-  stimulus: dir+'test3.png',
+  stimulus: dir+'end.png',
   choices: "ALL_KEYS",
   on_finish: function () {
     $("body").css("cursor", "default");
