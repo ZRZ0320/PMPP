@@ -512,7 +512,7 @@ var prac_proc = {
   loop_function: function(data){
       var total_trials = jsPsych.data.get().filter({type: 'prac_target'}).count();
       var accuracy = Math.round(jsPsych.data.get().filter({correct: true}).count() / total_trials * 100);
-     if (accuracy < 90) {
+     if (accuracy < 75) {
           return true;
     } else {
           return false;
