@@ -187,10 +187,10 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
             var random_angle = this.wsp;
 
         }
-        for (let i = 0; i < numSegments/3; i++) {
+        for (let i = 0; i < numSegments/6; i++) {
             const startColor = 'rgba(255, 0, 0, 1)'; 
-            const endColor = 'rgba(0, 0, 255, 1)'; 
-            const currentColor = interpolateColor(startColor, endColor, i / numSegments*3); 
+            const endColor = 'rgba(255, 165, 0, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
             context.strokeStyle = currentColor;
             context.lineWidth = lineWidth;
             context.beginPath();
@@ -203,35 +203,83 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
         }
         
 
-        for (let i = 0; i < numSegments/3; i++) {
-            const startColor = 'rgba(0, 0, 255, 1)'; 
-            const endColor = 'rgba(0, 255, 0, 1)'; 
-            const currentColor = interpolateColor(startColor, endColor, i / numSegments*3); 
+        for (let i = 0; i < numSegments/6; i++) {
+            const startColor = 'rgba(255, 165, 0, 1)'; 
+            const endColor = 'rgba(255, 255, 0, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
             context.strokeStyle = currentColor;
             context.lineWidth = lineWidth;
             context.beginPath();
             const segmentAngle = 2 * Math.PI / numSegments;
-            const startAngle = i * segmentAngle + 2 * Math.PI / 3 +random_angle;
-            const endAngle = (i + 1) * segmentAngle + 2 * Math.PI / 3 +random_angle;
+            const startAngle = i * segmentAngle + 2 * Math.PI / 6 +random_angle;
+            const endAngle = (i + 1) * segmentAngle + 2 * Math.PI / 6 +random_angle;
             context.arc(diameter*1.5 / 2, diameter*1.5 / 2, diameter * 1.05 / 2, startAngle-0.02, endAngle+0.02);
             context.stroke();
             //console.log(currentColor)
         }
 
-        for (let i = 0; i < numSegments/3; i++) {
-            const startColor = 'rgba(0, 255, 0, 1)'; 
-            const endColor = 'rgba(255, 0, 0, 1)'; 
-            const currentColor = interpolateColor(startColor, endColor, i / numSegments*3); 
+
+        for (let i = 0; i < numSegments/6; i++) {
+            const startColor = 'rgba(255, 255, 0, 1)'; 
+            const endColor = 'rgba(0, 128, 0, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
             context.strokeStyle = currentColor;
             context.lineWidth = lineWidth;
             context.beginPath();
             const segmentAngle = 2 * Math.PI / numSegments;
-            const startAngle = i * segmentAngle + 4 * Math.PI / 3+random_angle;
-            const endAngle = (i + 1) * segmentAngle + 4 * Math.PI / 3+random_angle;
+            const startAngle = i * segmentAngle +4 * Math.PI / 6+random_angle;
+            const endAngle = (i + 1) * segmentAngle  +4 * Math.PI / 6+random_angle;
+            context.arc(diameter*1.5 / 2, diameter*1.5 / 2, diameter * 1.05 / 2, startAngle-0.02, endAngle+0.02);
+            context.stroke();
+            //console.log(currentColor)
+        }
+        
+
+        for (let i = 0; i < numSegments/6; i++) {
+            const startColor = 'rgba(0, 128, 0, 1)'; 
+            const endColor = 'rgba(0, 0, 255, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
+            context.strokeStyle = currentColor;
+            context.lineWidth = lineWidth;
+            context.beginPath();
+            const segmentAngle = 2 * Math.PI / numSegments;
+            const startAngle = i * segmentAngle +6 * Math.PI / 6 +random_angle;
+            const endAngle = (i + 1) * segmentAngle +6 * Math.PI / 6 +random_angle;
+            context.arc(diameter*1.5 / 2, diameter*1.5 / 2, diameter * 1.05 / 2, startAngle-0.02, endAngle+0.02);
+            context.stroke();
+            //console.log(currentColor)
+        }
+
+        for (let i = 0; i < numSegments/6; i++) {
+            const startColor = 'rgba(0, 0, 255, 1)'; 
+            const endColor = 'rgba(128, 0, 128, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
+            context.strokeStyle = currentColor;
+            context.lineWidth = lineWidth;
+            context.beginPath();
+            const segmentAngle = 2 * Math.PI / numSegments;
+            const startAngle = i * segmentAngle +8* Math.PI / 6+random_angle;
+            const endAngle = (i + 0) * segmentAngle +8* Math.PI / 6+random_angle;
             context.arc(diameter*1.5 / 2, diameter*1.5 / 2, diameter * 1.05 / 2, startAngle-0.02, endAngle+0.02);
             context.stroke();
             //console.log(currentColor)
           }
+          for (let i = 0; i < numSegments/6; i++) {
+            const startColor = 'rgba(128, 0, 128, 1)'; 
+            const endColor = 'rgba(255, 0, 0, 1)'; 
+            const currentColor = interpolateColor(startColor, endColor, i / numSegments*6); 
+            context.strokeStyle = currentColor;
+            context.lineWidth = lineWidth;
+            context.beginPath();
+            const segmentAngle = 2 * Math.PI / numSegments;
+            const startAngle = i * segmentAngle +10* Math.PI / 6+random_angle;
+            const endAngle = (i + 1) * segmentAngle +10* Math.PI / 6+random_angle;
+            context.arc(diameter*1.5 / 2, diameter*1.5 / 2, diameter * 1.05 / 2, startAngle-0.02, endAngle+0.02);
+            context.stroke();
+            //console.log(currentColor)
+          }
+
+
         const canvas2 = document.getElementById('square');
         const context2 = canvas2.getContext('2d');
 
@@ -246,27 +294,57 @@ var jsPsychReconstruct_colorwheel = (function (jspsych) {
 
         
         function sqaurecolor(img_angle){
-            if(img_angle<120 && img_angle>=0){
+            if(img_angle<60 && img_angle>=0){
               const startColor = 'rgba(255, 0, 0, 1)'; 
-              const endColor = 'rgba(0, 0, 255, 1)'; 
-              const currentColor = interpolateColor(startColor, endColor, img_angle/120); 
+              const endColor = 'rgba(255, 165, 0, 1)'; 
+              const currentColor = interpolateColor(startColor, endColor, img_angle/60); 
               const color = currentColor;
               return color;
             }  
-            if(img_angle<240 && img_angle>=120){
+            if(img_angle<120 && img_angle>=60){
+              const startColor = 'rgba(255, 165, 0, 1)';
+              const endColor = 'rgba(255, 255, 0, 1)';
+              const currentColor = interpolateColor(startColor, endColor, (img_angle-60)/60);
+              const color = currentColor;
+              return color;
+            }
+            if(img_angle<180 && img_angle>=120){
+              const startColor = 'rgba(255, 255, 0, 1)';
+              const endColor = 'rgba(0, 128, 0, 1)';
+              const currentColor = interpolateColor(startColor, endColor, (img_angle-120)/60);
+              const color = currentColor;
+              return color;
+            }
+            if(img_angle<240 && img_angle>=180){
+              const startColor = 'rgba(0, 128, 0, 1)'; 
+              const endColor = 'rgba(0, 0, 255, 1)'; 
+              const currentColor = interpolateColor(startColor, endColor, (img_angle-180)/60); 
+              const color = currentColor;
+              return color;
+            }  
+            if(img_angle<300 && img_angle>=240){
               const startColor = 'rgba(0, 0, 255, 1)';
-              const endColor = 'rgba(0, 255, 0, 1)';
-              const currentColor = interpolateColor(startColor, endColor, (img_angle-120)/120);
+              const endColor = 'rgba(128, 0, 128, 1)';
+              const currentColor = interpolateColor(startColor, endColor, (img_angle-240)/60);
               const color = currentColor;
               return color;
             }
-            if(img_angle<360 && img_angle>=240){
-              const startColor = 'rgba(0, 255, 0, 1)';
+            if(img_angle<360 && img_angle>=300){
+              const startColor = 'rgba(128, 0, 128, 1)';
               const endColor = 'rgba(255, 0, 0, 1)';
-              const currentColor = interpolateColor(startColor, endColor, (img_angle-240)/120);
+              const currentColor = interpolateColor(startColor, endColor, (img_angle-300)/60);
               const color = currentColor;
               return color;
             }
+
+
+
+
+
+
+
+
+
             if(img_angle > 360){
               const color = `rgba(255, 255, 255, 1)`;
               return color;

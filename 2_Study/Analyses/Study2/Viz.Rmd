@@ -1,0 +1,42 @@
+```{r}
+library(pacman)
+p_load('tidyverse','bruceR')
+```
+```{r}
+df<- read.csv('PreprocessedData/SceneData.csv',row.names = 1)
+df.correct<- filter(df,Correct==1)
+```
+
+```{r}
+ggplot(df.correct,
+       aes(x=Rt,
+       color=Condition,
+      ))+
+  geom_histogram(aes(y = ..density..,
+                      fill=Condition), 
+                 
+                 position = "identity",
+                 alpha=0.5) +
+  geom_density() +
+  labs(x = "Rt", y = "Density") +
+  theme_minimal()
+```
+```{r}
+ggplot(df.correct,
+       aes(x=Error,
+       color=Condition))+
+  geom_histogram(aes(y = ..density..,
+                     fill=Condition), 
+                 
+                 position = "identity",
+                 alpha=0.5,
+                 bins=15) +
+  geom_density() +
+  labs(x = "Error", y = "Density") +
+  theme_minimal()
+```
+```{r}
+bruceR::Corr(df)
+
+```
+
